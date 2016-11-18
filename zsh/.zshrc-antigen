@@ -1,0 +1,31 @@
+source $HOME/.antigen/antigen.zsh
+
+# zsh-syntax-hightlighting =====================================================
+antigen bundle zsh-users/zsh-syntax-highlighting
+ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor root)
+
+# oh-my-zsh & plugins ==========================================================
+antigen use oh-my-zsh
+antigen bundle colored-man-pages
+antigen bundle copybuffer
+antigen bundle dircycle
+antigen bundle dirhistory
+antigen bundle docker
+antigen bundle docker-compose
+antigen bundle fasd
+antigen bundle git
+antigen bundle golang
+antigen bundle history-substring-search
+antigen bundle ssh-agent
+antigen bundle tmux
+antigen bundle urltools
+
+# zsh-autosuggestions ==========================================================
+antigen bundle zsh-users/zsh-autosuggestions
+
+# my theme =====================================================================
+antigen theme lalloni/oh-my-zsh themes/pilantropy
+
+# go antigen ===================================================================
+antigen apply
+
