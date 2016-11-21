@@ -7,3 +7,6 @@
 [submodule "zsh/.oh-my-zsh-custom"]
 	path = zsh/.oh-my-zsh-custom
 	url = https://github.com/lalloni/oh-my-zsh-custom.git
+[submodule "vim/.vim/bundle/Vundle.vim"]
+	path = vim/.vim/bundle/Vundle.vim
+	url = https://github.com/VundleVim/Vundle.vim.git

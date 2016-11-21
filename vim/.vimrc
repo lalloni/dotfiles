@@ -1,6 +1,9 @@
 " First things first
 set nocompatible
 
+" Must be here
+source ~/.vim/plugins.vim
+
 " Simple options
 set autoindent                          " Autoindent new lines
 set autoread                            " Automatically read externally modified files
@@ -70,7 +73,4 @@ endif
 if !exists(':VimRC')
     command VimRC :edit ~/.vimrc
 endif
-
-" User docs
-helptags ~/.vim/doc 
 
