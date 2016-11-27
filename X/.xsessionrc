@@ -1,0 +1,10 @@
+#!/bin/sh
+
+# Load Xresources
+find -L ~/.Xresources.d -type f | while read res
+do
+    xrdb -merge "$res"
+done
+
+# Map "PrintScr" to "Menu"
+xmodmap -e "keycode 107 = Menu"
