@@ -1,0 +1,31 @@
+URxvt.depth:			24
+
+URxvt.font:			xft:Input Mono Narrow:size=10:style=regular,xft:PragmataPro Mono:size=10:style=regular
+URxvt.skipBuiltinGlyphs:	true
+URxvt.letterSpace:		-1
+URxvt.lineSpace:		-1
+
+URxvt.internalBorder:		0
+URxvt.externalBorder:		0
+URxvt.scrollBar:		false
+URxvt.urgentOnBell:		true
+
+URxvt.cursorBlink:		false
+URxvt.cursorUnderline:		false
+
+URxvt.pointerBlank:		true
+
+URxvt.saveLines:		65535
+
+URxvt.iso14755:			false
+URxvt.iso14755_52:		false
+
+URxvt.perl-ext-common:		default,matcher
+URxvt.url-launcher:		xdg-open
+URxvt.matcher.button:		1
+URxvt.matcher.rend.0:		Uline fg6
+
+URxvt.secondaryScreen:		1
+URxvt.secondaryScroll:		0
+
+! vim:set noet ts=8 ft=xdefaults:
