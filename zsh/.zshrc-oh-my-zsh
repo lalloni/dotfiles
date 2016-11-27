@@ -45,5 +45,5 @@ plugins=(
 
 source $ZSH/oh-my-zsh.sh
 
-ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor root)
+ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets root)
 
