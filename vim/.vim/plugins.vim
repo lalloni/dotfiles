@@ -17,10 +17,7 @@ Plugin 'ctrlpvim/ctrlp.vim'
 " TagBar
 Plugin 'majutsushi/tagbar'
 
-" ACK/Grep searching
-Plugin 'mileszs/ack.vim'
-
-" % match improvementes
+" match with % improvements
 Plugin 'matchit.zip'
 
 " NERDTree

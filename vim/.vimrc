@@ -158,13 +158,6 @@ map <S-Tab> :call DedentCurrentLine()<CR>
 
 " Plugins settings =============================================================
 
-" Ack.vim {
-if isdirectory(expand("~/.vim/bundle/ack.vim"))
-    " Use the-silversurfer-ag for ack
-    let g:ackprg = 'ag --nogroup --nocolor --column --smart-case'
-endif
-" }
-
 " matchit {
 if isdirectory(expand("~/.vim/bundle/matchit.zip"))
     let b:match_ignorecase = 1
