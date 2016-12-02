@@ -94,11 +94,7 @@ endif
 
 " Set color scheme options
 set background=dark
-colorscheme slate
-
-"colorscheme solarized|
-"let g:solarized_termcolors=256
-"let g:solarized_contrast="high"
+colorscheme slate " this is overriden below if solarized is installed
 
 " Change leader keys
 let mapleader=','
@@ -158,6 +154,15 @@ map <S-Tab> :call DedentCurrentLine()<CR>
 
 " Plugins settings =============================================================
 
+" solarized colors {
+if isdirectory(expand('~/.vim/bundle/vim-colors-solarized'))
+    let g:solarized_termcolors=256
+    let g:solarized_contrast="high"
+    let g:solarized_visibility="normal" " special chars intensity level
+    colorscheme solarized
+endif
+"}
+
 " matchit {
 if isdirectory(expand("~/.vim/bundle/matchit.zip"))
     let b:match_ignorecase = 1
@@ -174,15 +179,15 @@ if isdirectory(expand("~/.vim/bundle/vim-go"))
     let g:go_fmt_command = "goimports"
     let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
     let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
-    au FileType go nmap <Leader>s <Plug>(go-implements)
-    au FileType go nmap <Leader>i <Plug>(go-info)
-    au FileType go nmap <Leader>e <Plug>(go-rename)
-    au FileType go nmap <leader>r <Plug>(go-run)
-    au FileType go nmap <leader>b <Plug>(go-build)
-    au FileType go nmap <leader>t <Plug>(go-test)
-    au FileType go nmap <Leader>gd <Plug>(go-doc)
-    au FileType go nmap <Leader>gv <Plug>(go-doc-vertical)
-    au FileType go nmap <leader>co <Plug>(go-coverage)
+    autocmd FileType go nmap <Leader>s <Plug>(go-implements)
+    autocmd FileType go nmap <Leader>i <Plug>(go-info)
+    autocmd FileType go nmap <Leader>e <Plug>(go-rename)
+    autocmd FileType go nmap <leader>r <Plug>(go-run)
+    autocmd FileType go nmap <leader>b <Plug>(go-build)
+    autocmd FileType go nmap <leader>t <Plug>(go-test)
+    autocmd FileType go nmap <Leader>gd <Plug>(go-doc)
+    autocmd FileType go nmap <Leader>gv <Plug>(go-doc-vertical)
+    autocmd FileType go nmap <leader>co <Plug>(go-coverage)
 endif
 " }
 
@@ -192,6 +197,8 @@ if isdirectory(expand("~/.vim/bundle/nerdtree"))
     map <C-S-e> :NERDTreeFind<CR>
     let g:NERDTreeShowHidden=1
     let g:NERDTreeShowBookmarks=1
+    let g:NERDTreeMinimalUI=1
+    let NERDTreeIgnore=['\.py[cd]$', '\~$', '\.swo$', '\.swp$', '^\.git$', '^\.hg$', '^\.svn$', '\.bzr$']
     " close vim if the only window left open is a NERDTree
     autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 endif
@@ -210,17 +217,49 @@ endif
 " }
 
 " Airline {
-if isdirectory(expand("~/.vim/bundle/Airline"))
+if isdirectory(expand("~/.vim/bundle/vim-airline"))
     let g:airline_powerline_fonts=1
     let g:airline#extensions#tabline#enabled=1
-    let g:airline#extensions#tabline#left_sep=' '
-    let g:airline#extensions#tabline#left_alt_sep='|'
-    let g:airline#extensions#tabline#right_sep=' '
-    let g:airline#extensions#tabline#right_alt_sep='|'
-    let g:airline_left_sep=' '
-    let g:airline_left_alt_sep='|'
-    let g:airline_right_sep=' '
-    let g:airline_right_alt_sep='|'
+    "let g:airline#extensions#tabline#left_sep=' '
+    "let g:airline#extensions#tabline#left_alt_sep='|'
+    "let g:airline#extensions#tabline#right_sep=' '
+    "let g:airline#extensions#tabline#right_alt_sep='|'
+    "let g:airline_left_sep=' '
+    "let g:airline_left_alt_sep='|'
+    "let g:airline_right_sep=' '
+    "let g:airline_right_alt_sep='|'
+endif
+" }
+
+" CtrlP {
+if isdirectory(expand("~/.vim/bundle/ctrlp.vim"))
+    let g:ctrlp_working_path_mode = 'ra'
+    let g:ctrlp_custom_ignore = {
+        \ 'dir':  '\.git$\|\.hg$\|\.svn$|target$',
+        \ 'file': '\.so$\|\.pyc$|\.class$|\.a$'}
+    if executable('ag')
+        let s:ctrlp_fallback = 'ag %s --nocolor -l -g ""'
+    elseif executable('ack-grep')
+        let s:ctrlp_fallback = 'ack-grep %s --nocolor -f'
+    elseif executable('ack')
+        let s:ctrlp_fallback = 'ack %s --nocolor -f'
+    endi
+    if exists("g:ctrlp_user_command")
+        unlet g:ctrlp_user_command
+    endif
+    let g:ctrlp_user_command = {
+        \ 'types': {
+            \ 1: ['.git', 'cd %s && git ls-files . --cached --exclude-standard --others'],
+            \ 2: ['.hg', 'hg --cwd %s locate -I .'],
+        \ },
+        \ 'fallback': s:ctrlp_fallback
+    \ }
+    if isdirectory(expand("~/.vim/bundle/ctrlp-funky"))
+        " CtrlP extensions
+        let g:ctrlp_extensions = ['funky']
+        " funky
+        nnoremap <Leader>fu :CtrlPFunky<Cr>
+    endif
 endif
 " }
 

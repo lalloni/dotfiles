@@ -3,7 +3,12 @@ set rtp+=~/.vim/bundle/Vundle.vim   " required by vundle
 call vundle#begin()                 " required by vundle
 Plugin 'VundleVim/Vundle.vim'       " required by vundle
 
+" ======================================
 " Add plugins from here ================
+" ======================================
+
+" Solarized
+Plugin 'altercation/vim-colors-solarized'
 
 " git support
 Plugin 'fugitive.vim'
@@ -13,6 +18,7 @@ Plugin 'vim-airline/vim-airline'
 
 " ctrl-p navigation
 Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'tacahiroy/ctrlp-funky'
 
 " TagBar
 Plugin 'majutsushi/tagbar'
@@ -48,7 +54,9 @@ Plugin 'pangloss/vim-javascript'
 " Autocompletion framework
 Plugin 'Shougo/neocomplete.vim'
 
+" ======================================
 " No more plugins from here ============
+" ======================================
 
 call vundle#end()
 filetype plugin indent on           " required by vundle
