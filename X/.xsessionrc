@@ -1,9 +1,14 @@
 #!/bin/sh
 
 # Load Xresources
-find -L ~/.Xresources.d -type f | while read res
+find -L ~/.Xresources.d -type f -name '*.Xresources' | while read res
 do
     xrdb -merge "$res"
+done
+
+find -L ~/.Xresources.d -type f -executable | while read script
+do
+    $script | xrdb -merge
 done
 
 # Map "PrintScr" to "Menu"
