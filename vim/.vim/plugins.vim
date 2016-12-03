@@ -11,10 +11,11 @@ Plugin 'VundleVim/Vundle.vim'       " required by vundle
 Plugin 'altercation/vim-colors-solarized'
 
 " git support
-Plugin 'fugitive.vim'
+Plugin 'tpope/vim-fugitive'
 
 " status/buffers/tabs bars
 Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
 
 " ctrl-p navigation
 Plugin 'ctrlpvim/ctrlp.vim'
@@ -53,6 +54,18 @@ Plugin 'pangloss/vim-javascript'
 
 " Autocompletion framework
 Plugin 'Shougo/neocomplete.vim'
+
+" Rainbow matching parenthesis colors
+Plugin 'luochen1990/rainbow'
+
+" Undotree time machine!
+Plugin 'mbbill/undotree'
+
+" Polyglot syntax checking
+Plugin 'vim-syntastic/syntastic'
+
+" Tabular text alignment
+Plugin 'godlygeek/tabular'
 
 " ======================================
 " No more plugins from here ============

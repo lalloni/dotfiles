@@ -94,7 +94,7 @@ endif
 
 " Set color scheme options
 set background=dark
-colorscheme slate " this is overriden below if solarized is installed
+"colorscheme slate " this is overriden below if solarized is installed
 
 " Change leader keys
 let mapleader=','
@@ -152,11 +152,18 @@ map <leader>et :tabedit %%
 map <Tab> :call IndentCurrentLine()<CR>
 map <S-Tab> :call DedentCurrentLine()<CR>
 
+" GVim configuration
+if has('gui_running')
+    set guioptions-=T " no toolbar
+    set lines=40
+    set guifont=Input Mono Narrow Regular 10,PragmataPro Mono Regular 10
+endif
+
 " Plugins settings =============================================================
 
 " solarized colors {
 if isdirectory(expand('~/.vim/bundle/vim-colors-solarized'))
-    let g:solarized_termcolors=256
+    "let g:solarized_termcolors=256
     let g:solarized_contrast="high"
     let g:solarized_visibility="normal" " special chars intensity level
     colorscheme solarized
@@ -198,7 +205,8 @@ if isdirectory(expand("~/.vim/bundle/nerdtree"))
     let g:NERDTreeShowHidden=1
     let g:NERDTreeShowBookmarks=1
     let g:NERDTreeMinimalUI=1
-    let NERDTreeIgnore=['\.py[cd]$', '\~$', '\.swo$', '\.swp$', '^\.git$', '^\.hg$', '^\.svn$', '\.bzr$']
+    let g:NERDTreeIgnore=['\.py[cd]$', '\~$', '\.swo$', '\.swp$', '^\.git$', '^\.hg$', '^\.svn$', '\.bzr$']
+    let g:NERDTreeKeepTreeInNewTab=1
     " close vim if the only window left open is a NERDTree
     autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 endif
@@ -211,56 +219,151 @@ endif
 " }
 
 " NeoComplete {
-if isdirectory(expand("~/.vim/bundle/neocomplete.vim"))
-    let g:neocomplete#enable_at_startup=1
-endif
+    if isdirectory(expand("~/.vim/bundle/neocomplete.vim"))
+        let g:neocomplete#enable_at_startup = 1
+        let g:neocomplete#enable_smart_case = 1
+        let g:neocomplete#enable_auto_delimiter = 1
+        let g:neocomplete#enable_auto_select = 1
+        let g:neocomplete#enable_auto_close_preview = 1
+        if !exists('g:neocomplete#keyword_patterns')
+            let g:neocomplete#keyword_patterns = {}
+        endif
+        let g:neocomplete#keyword_patterns['default'] = '\h\w*'
+        inoremap <expr><C-g> neocomplete#undo_completion()
+        inoremap <expr><C-l> neocomplete#complete_common_string()
+        inoremap <expr><Tab> pumvisible() ? "\<CR>" : "\<Tab>"
+        " use TAB/S-TAB to select from completion menu
+        "inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
+        "inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<TAB>"
+    endif
 " }
 
 " Airline {
-if isdirectory(expand("~/.vim/bundle/vim-airline"))
-    let g:airline_powerline_fonts=1
-    let g:airline#extensions#tabline#enabled=1
-    "let g:airline#extensions#tabline#left_sep=' '
-    "let g:airline#extensions#tabline#left_alt_sep='|'
-    "let g:airline#extensions#tabline#right_sep=' '
-    "let g:airline#extensions#tabline#right_alt_sep='|'
-    "let g:airline_left_sep=' '
-    "let g:airline_left_alt_sep='|'
-    "let g:airline_right_sep=' '
-    "let g:airline_right_alt_sep='|'
-endif
+    if isdirectory(expand("~/.vim/bundle/vim-airline"))
+        let g:airline_powerline_fonts=1
+        let g:airline#extensions#tabline#enabled=1
+        "let g:airline#extensions#tabline#left_sep=' '
+        "let g:airline#extensions#tabline#left_alt_sep='|'
+        "let g:airline#extensions#tabline#right_sep=' '
+        "let g:airline#extensions#tabline#right_alt_sep='|'
+        "let g:airline_left_sep=' '
+        "let g:airline_left_alt_sep='|'
+        "let g:airline_right_sep=' '
+        "let g:airline_right_alt_sep='|'
+        if isdirectory(expand("~/.vim/bundle/vim-airline-themes"))
+            let g:airline_theme='solarized'
+        endif
+    endif
 " }
 
 " CtrlP {
-if isdirectory(expand("~/.vim/bundle/ctrlp.vim"))
-    let g:ctrlp_working_path_mode = 'ra'
-    let g:ctrlp_custom_ignore = {
-        \ 'dir':  '\.git$\|\.hg$\|\.svn$|target$',
-        \ 'file': '\.so$\|\.pyc$|\.class$|\.a$'}
-    if executable('ag')
-        let s:ctrlp_fallback = 'ag %s --nocolor -l -g ""'
-    elseif executable('ack-grep')
-        let s:ctrlp_fallback = 'ack-grep %s --nocolor -f'
-    elseif executable('ack')
-        let s:ctrlp_fallback = 'ack %s --nocolor -f'
-    endi
-    if exists("g:ctrlp_user_command")
-        unlet g:ctrlp_user_command
+    if isdirectory(expand("~/.vim/bundle/ctrlp.vim"))
+        let g:ctrlp_working_path_mode = 'ra'
+        let g:ctrlp_custom_ignore = {
+            \ 'dir':  '\.git$\|\.hg$\|\.svn$|target$',
+            \ 'file': '\.so$\|\.pyc$|\.class$|\.a$'}
+        if executable('ag')
+            let s:ctrlp_fallback = 'ag %s --nocolor -l -g ""'
+        elseif executable('ack-grep')
+            let s:ctrlp_fallback = 'ack-grep %s --nocolor -f'
+        elseif executable('ack')
+            let s:ctrlp_fallback = 'ack %s --nocolor -f'
+        endi
+        if exists("g:ctrlp_user_command")
+            unlet g:ctrlp_user_command
+        endif
+        let g:ctrlp_user_command = {
+            \ 'types': {
+                \ 1: ['.git', 'cd %s && git ls-files . --cached --exclude-standard --others'],
+                \ 2: ['.hg', 'hg --cwd %s locate -I .'],
+            \ },
+            \ 'fallback': s:ctrlp_fallback
+        \ }
+        if isdirectory(expand("~/.vim/bundle/ctrlp-funky"))
+            " CtrlP extensions
+            let g:ctrlp_extensions = ['funky']
+            " funky
+            nnoremap <Leader>fu :CtrlPFunky<Cr>
+        endif
     endif
-    let g:ctrlp_user_command = {
-        \ 'types': {
-            \ 1: ['.git', 'cd %s && git ls-files . --cached --exclude-standard --others'],
-            \ 2: ['.hg', 'hg --cwd %s locate -I .'],
-        \ },
-        \ 'fallback': s:ctrlp_fallback
-    \ }
-    if isdirectory(expand("~/.vim/bundle/ctrlp-funky"))
-        " CtrlP extensions
-        let g:ctrlp_extensions = ['funky']
-        " funky
-        nnoremap <Leader>fu :CtrlPFunky<Cr>
+" }
+
+" ctags {
+    set tags=./tags;/,~/.vimtags
+    " Make tags placed in .git/tags file available in all levels of a repository
+    let gitroot = substitute(system('git rev-parse --show-toplevel'), '[\n\r]', '', 'g')
+    if gitroot != ''
+        let &tags = &tags . ',' . gitroot . '/.git/tags'
     endif
-endif
+" }
+
+" JSON {
+    nmap <leader>jt <Esc>:%!python -m json.tool<CR><Esc>:set filetype=json<CR>
+    let g:vim_json_syntax_conceal = 0
+" }
+
+" Rainbow {
+    if isdirectory(expand("~/.vim/bundle/rainbow"))
+        let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
+    endif
+"}
+
+" Fugitive {
+    if isdirectory(expand("~/.vim/bundle/vim-fugitive"))
+        nnoremap <silent> <leader>gs :Gstatus<CR>
+        nnoremap <silent> <leader>gd :Gdiff<CR>
+        nnoremap <silent> <leader>gc :Gcommit<CR>
+        nnoremap <silent> <leader>gb :Gblame<CR>
+        nnoremap <silent> <leader>gl :Glog<CR>
+        nnoremap <silent> <leader>gp :Git push<CR>
+        nnoremap <silent> <leader>gr :Gread<CR>
+        nnoremap <silent> <leader>gw :Gwrite<CR>
+        nnoremap <silent> <leader>ge :Gedit<CR>
+        " Mnemonic _i_nteractive
+        nnoremap <silent> <leader>gi :Git add -p %<CR>
+        nnoremap <silent> <leader>gg :SignifyToggle<CR>
+    endif
+"}
+
+" Undotree {
+    if isdirectory(expand("~/.vim/bundle/undotree"))
+        nnoremap <Leader>u :UndotreeToggle<CR>
+        let g:undotree_SetFocusWhenToggle=1
+    endif
+" }
+
+" Syntastic {
+    if isdirectory(expand("~/.vim/bundle/syntastic"))
+        "set statusline+=%#warningmsg#
+        "set statusline+=%{SyntasticStatuslineFlag()}
+        "set statusline+=%*
+        let g:syntastic_always_populate_loc_list = 1
+        let g:syntastic_auto_loc_list = 1
+        let g:syntastic_check_on_open = 1
+        let g:syntastic_aggregate_errors = 1
+        let g:syntastic_check_on_wq = 0
+    endif
+" }
+
+" Tabularize {
+    if isdirectory(expand("~/.vim/bundle/tabular"))
+        nmap <Leader>a& :Tabularize /&<CR>
+        vmap <Leader>a& :Tabularize /&<CR>
+        nmap <Leader>a= :Tabularize /^[^=]*\zs=<CR>
+        vmap <Leader>a= :Tabularize /^[^=]*\zs=<CR>
+        nmap <Leader>a=> :Tabularize /=><CR>
+        vmap <Leader>a=> :Tabularize /=><CR>
+        nmap <Leader>a: :Tabularize /:<CR>
+        vmap <Leader>a: :Tabularize /:<CR>
+        nmap <Leader>a:: :Tabularize /:\zs<CR>
+        vmap <Leader>a:: :Tabularize /:\zs<CR>
+        nmap <Leader>a, :Tabularize /,<CR>
+        vmap <Leader>a, :Tabularize /,<CR>
+        nmap <Leader>a,, :Tabularize /,\zs<CR>
+        vmap <Leader>a,, :Tabularize /,\zs<CR>
+        nmap <Leader>a<Bar> :Tabularize /<Bar><CR>
+        vmap <Leader>a<Bar> :Tabularize /<Bar><CR>
+    endif
 " }
 
 " FUNCTIONS ====================================================================
