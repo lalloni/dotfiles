@@ -156,7 +156,7 @@ map <S-Tab> :call DedentCurrentLine()<CR>
 if has('gui_running')
     set guioptions-=T " no toolbar
     set lines=40
-    set guifont=Input Mono Narrow Regular 10,PragmataPro Mono Regular 10
+    set guifont=Input\ Mono\ Narrow\ 11,PragmataPro\ Mono\ 10
 endif
 
 " Plugins settings =============================================================
