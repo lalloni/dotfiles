@@ -383,13 +383,14 @@ endfunction
 function! IndentCurrentLine()
     let l = line(".")
     let c = col(".")
-    :normal I	
+    normal I	
     call cursor(l, c)
 endfunction
 
 function! DedentCurrentLine()
     let l = line(".")
     let c = col(".")
-    :normal [7~wi
+    call cursor(l, 0)
+    normal wi
     call cursor(l, c)
 endfunction
