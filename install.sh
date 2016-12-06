@@ -56,7 +56,7 @@ askYn() {
 
 restow() {
     show "re/stowing $1..."
-    command stow -R "$1" || die "stowing $1"
+    command stow -R "$1"
 }
 
 # Parse arguments
@@ -85,6 +85,7 @@ then
         ctags \
         htop \
         most \
+        pv \
         ranger \
         silversearcher-ag \
         stow \
@@ -118,8 +119,13 @@ fi
 # Link dotfiles
 cd "$BASE"
 find -maxdepth 1 -type d -not -name '.*' -printf "%P\n" | while read -r d; do
-    restow "$d"
-done
+    restow "$d" || die "restowing $d"
+done || die "restowing"
+info "done."
+
+info "Initializing dotfiles git submodules..."
+cd "$BASE" # just in case
+git submodule update --init
 info "done."
 
 info "Installing vim plugins..."
