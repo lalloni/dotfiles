@@ -130,5 +130,6 @@ git submodule update --init
 info "done."
 
 info "Installing vim plugins..."
-vim +PluginInstall +qall
+vim +PluginInstall +qall || die "installing vim plugins"
 info "done."
+
