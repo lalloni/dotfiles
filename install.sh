@@ -85,6 +85,7 @@ then
         ctags \
         htop \
         most \
+        parallel \
         pv \
         ranger \
         silversearcher-ag \
