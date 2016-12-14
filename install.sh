@@ -82,6 +82,7 @@ if askYn "Install basic programs?"
 then
     info "Installing basic programs..."
     sudo apt install -y \
+        cmake \
         ctags \
         htop \
         most \
@@ -90,6 +91,7 @@ then
         ranger \
         silversearcher-ag \
         stow \
+        tmux \
         vim \
         zsh \
         || die "installing programs"
@@ -133,3 +135,6 @@ info "Installing vim plugins..."
 vim +PluginInstall +qall || die "installing vim plugins"
 info "done."
 
+info "Installing tmux plugins..."
+~/.tmux/plugins/tpm/scripts/install_plugins.sh || die "installing tmux plugins"
+info "done."
