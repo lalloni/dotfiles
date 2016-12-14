@@ -153,58 +153,61 @@ if has('gui_running')
     set guifont=Input\ Mono\ Narrow\ 11,PragmataPro\ Mono\ 10
 endif
 
-" Colorscheme configuration
-set background=dark
-colorscheme base16-google-dark
+" Colorscheme configuration {
+    set background=dark
+    if isdirectory(expand("~/.vim/bundle/base16-vim"))
+        colorscheme base16-google-dark
+    endif
+" }
 
 " Plugins settings =============================================================
 
 " matchit {
-if isdirectory(expand("~/.vim/bundle/matchit.zip"))
-    let b:match_ignorecase = 1
-endif
+    if isdirectory(expand("~/.vim/bundle/matchit.zip"))
+        let b:match_ignorecase = 1
+    endif
 " }
 
 " Go {
-if isdirectory(expand("~/.vim/bundle/vim-go"))
-    let g:go_highlight_functions = 1
-    let g:go_highlight_methods = 1
-    let g:go_highlight_structs = 1
-    let g:go_highlight_operators = 1
-    let g:go_highlight_build_constraints = 1
-    let g:go_fmt_command = "goimports"
-    let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
-    let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
-    autocmd FileType go nmap <Leader>s <Plug>(go-implements)
-    autocmd FileType go nmap <Leader>i <Plug>(go-info)
-    autocmd FileType go nmap <Leader>e <Plug>(go-rename)
-    autocmd FileType go nmap <leader>r <Plug>(go-run)
-    autocmd FileType go nmap <leader>b <Plug>(go-build)
-    autocmd FileType go nmap <leader>t <Plug>(go-test)
-    autocmd FileType go nmap <Leader>gd <Plug>(go-doc)
-    autocmd FileType go nmap <Leader>gv <Plug>(go-doc-vertical)
-    autocmd FileType go nmap <leader>co <Plug>(go-coverage)
-endif
+    if isdirectory(expand("~/.vim/bundle/vim-go"))
+        let g:go_highlight_functions = 1
+        let g:go_highlight_methods = 1
+        let g:go_highlight_structs = 1
+        let g:go_highlight_operators = 1
+        let g:go_highlight_build_constraints = 1
+        let g:go_fmt_command = "goimports"
+        let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
+        let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
+        autocmd FileType go nmap <Leader>s <Plug>(go-implements)
+        autocmd FileType go nmap <Leader>i <Plug>(go-info)
+        autocmd FileType go nmap <Leader>e <Plug>(go-rename)
+        autocmd FileType go nmap <leader>r <Plug>(go-run)
+        autocmd FileType go nmap <leader>b <Plug>(go-build)
+        autocmd FileType go nmap <leader>t <Plug>(go-test)
+        autocmd FileType go nmap <Leader>gd <Plug>(go-doc)
+        autocmd FileType go nmap <Leader>gv <Plug>(go-doc-vertical)
+        autocmd FileType go nmap <leader>co <Plug>(go-coverage)
+    endif
 " }
 
 " NERDTree {
-if isdirectory(expand("~/.vim/bundle/nerdtree"))
-    map <C-e> :NERDTreeToggle<CR>
-    map <C-S-e> :NERDTreeFind<CR>
-    let g:NERDTreeShowHidden=1
-    let g:NERDTreeShowBookmarks=1
-    let g:NERDTreeMinimalUI=1
-    let g:NERDTreeIgnore=['\.py[cd]$', '\~$', '\.swo$', '\.swp$', '^\.git$', '^\.hg$', '^\.svn$', '\.bzr$']
-    let g:NERDTreeKeepTreeInNewTab=1
-    " close vim if the only window left open is a NERDTree
-    autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-endif
+    if isdirectory(expand("~/.vim/bundle/nerdtree"))
+        map <C-e> :NERDTreeToggle<CR>
+        map <C-S-e> :NERDTreeFind<CR>
+        let g:NERDTreeShowHidden=1
+        let g:NERDTreeShowBookmarks=1
+        let g:NERDTreeMinimalUI=1
+        let g:NERDTreeIgnore=['\.py[cd]$', '\~$', '\.swo$', '\.swp$', '^\.git$', '^\.hg$', '^\.svn$', '\.bzr$']
+        let g:NERDTreeKeepTreeInNewTab=1
+        " close vim if the only window left open is a NERDTree
+        autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+    endif
 " }
 
 " TagBar {
-if isdirectory(expand("~/.vim/bundle/tagbar"))
-    nnoremap <silent> <leader>tt :TagbarToggle<CR>
-endif
+    if isdirectory(expand("~/.vim/bundle/tagbar"))
+        nnoremap <silent> <leader>tt :TagbarToggle<CR>
+    endif
 " }
 
 " NeoComplete {
