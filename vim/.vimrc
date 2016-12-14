@@ -66,8 +66,6 @@ endif
     if has('autocmd')
         " Remove trailing whitespaces and ^M chars
         autocmd FileType c,cpp,java,go,php,javascript,puppet,python,rust,twig,xml,yml,perl,sql autocmd BufWritePre <buffer> call StripTrailingWhitespace()
-        " Go format
-        autocmd FileType go autocmd BufWritePre <buffer> Fmt
         " Small indentation file types
         autocmd FileType haskell,puppet,ruby,yml setlocal expandtab shiftwidth=2 softtabstop=2
     endif
@@ -91,10 +89,6 @@ set encoding=utf-8
 if has('syntax') && !exists('g:syntax_on')
     syntax enable
 endif
-
-" Set color scheme options
-set background=dark
-"colorscheme slate " this is overriden below if solarized is installed
 
 " Change leader keys
 let mapleader=','
@@ -159,16 +153,11 @@ if has('gui_running')
     set guifont=Input\ Mono\ Narrow\ 11,PragmataPro\ Mono\ 10
 endif
 
-" Plugins settings =============================================================
+" Colorscheme configuration
+set background=dark
+colorscheme base16-google-dark
 
-" solarized colors {
-if isdirectory(expand('~/.vim/bundle/vim-colors-solarized'))
-    "let g:solarized_termcolors=256
-    let g:solarized_contrast="high"
-    let g:solarized_visibility="normal" " special chars intensity level
-    colorscheme solarized
-endif
-"}
+" Plugins settings =============================================================
 
 " matchit {
 if isdirectory(expand("~/.vim/bundle/matchit.zip"))
@@ -220,6 +209,7 @@ endif
 
 " NeoComplete {
     if isdirectory(expand("~/.vim/bundle/neocomplete.vim"))
+        let g:acp_enableAtStartup = 0
         let g:neocomplete#enable_at_startup = 1
         let g:neocomplete#enable_smart_case = 1
         let g:neocomplete#enable_auto_delimiter = 1
@@ -238,6 +228,17 @@ endif
     endif
 " }
 
+" NeoSnippets {
+    if isdirectory(expand("~/.vim/bundle/neosnippet.vim"))
+        imap <C-k> <Plug>(neosnippet_expand_or_jump)
+        smap <C-k> <Plug>(neosnippet_expand_or_jump)
+        xmap <C-k> <Plug>(neosnippet_expand_target)
+        smap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+        let g:neosnippet#enable_snipmate_compatibility=1
+        let g:neosnippet#snippets_directory='~/.vim/bundle/vim-go/gosnippets/snippets/'
+    endif
+" }
+
 " Airline {
     if isdirectory(expand("~/.vim/bundle/vim-airline"))
         let g:airline_powerline_fonts=1
@@ -251,7 +252,7 @@ endif
         "let g:airline_right_sep=' '
         "let g:airline_right_alt_sep='|'
         if isdirectory(expand("~/.vim/bundle/vim-airline-themes"))
-            let g:airline_theme='solarized'
+            let g:airline_theme='murmur'
         endif
     endif
 " }

@@ -7,8 +7,8 @@ Plugin 'VundleVim/Vundle.vim'       " required by vundle
 " Add plugins from here ================
 " ======================================
 
-" Solarized
-Plugin 'altercation/vim-colors-solarized'
+" Base16 colors
+Plugin 'chriskempson/base16-vim'
 
 " git support
 Plugin 'tpope/vim-fugitive'
@@ -54,6 +54,11 @@ Plugin 'pangloss/vim-javascript'
 
 " Autocompletion framework
 Plugin 'Shougo/neocomplete.vim'
+
+" Snippets Plugin
+Plugin 'Shougo/neosnippet.vim'
+Plugin 'Shougo/neosnippet-snippets'
+Plugin 'honza/vim-snippets'
 
 " Rainbow matching parenthesis colors
 Plugin 'luochen1990/rainbow'
