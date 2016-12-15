@@ -1,65 +1,16 @@
 #!/bin/sh
-
-USAGE="$(basename "$0") [options]
+USAGE="Usage: $(basename "$0") [options]
 
 Options:
 -y      Assume the user answered YES on all confirmation requests
 -h      Show this usage help
 "
 
-O_YES=0
-
 BASE="$(dirname "$(readlink -f "$0")")"
-
-info() {
-    echo ">>> $1"
-}
-
-warn() {
-    echo "!!! $1"
-}
-
-show() {
-    echo "    $1"
-}
-
-error() {
-    echo "err $1"
-}
-
-die() {
-    error "$1: aborting" >/dev/stderr
-    exit 1
-}
-
-askYn() {
-    if [ $O_YES -eq 1 ]
-    then
-        return 0
-    fi
-    while true
-    do
-        read -p "??? $1 (Y/n) " yn
-        case "$yn" in
-            y|Y|'')
-                return 0
-                ;;
-            n|N)
-                return 1
-                ;;
-            *)
-                warn "You must answer Y or N. Try again."
-                ;;
-        esac
-    done
-}
-
-restow() {
-    show "re/stowing $1..."
-    command stow -R "$1"
-}
+. "$BASE/lib.sh"
 
 # Parse arguments
+O_YES=0
 while getopts hy opt; do
     case "$opt" in
         y)
@@ -78,7 +29,7 @@ done
 shift $(($OPTIND - 1))
 
 # Install basic programs
-if askYn "Install basic programs?"
+if askYn "Install basic programs?" $O_YES
 then
     info "Installing basic programs..."
     sudo apt install -y \
@@ -99,7 +50,7 @@ then
 fi
 
 # Install GUI programs
-if askYn "Install GUI programs?"
+if askYn "Install GUI programs?" $O_YES
 then
     info "Installing GUI programs..."
     sudo apt install -y \
@@ -112,7 +63,7 @@ fi
 info "Linking dotfiles in $HOME..."
 # Check for stow
 if ! which stow >/dev/null; then
-    if askYn "Stow not found. Do you want to install it to proceed?"
+    if askYn "Stow not found. Do you want to install it to proceed?" $O_YES
     then
         sudo apt install -yq stow || die "installing stow"
     else

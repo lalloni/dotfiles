@@ -1,0 +1,34 @@
+#!/bin/sh
+USAGE="Usage: $(basename "$0") [options]
+
+Options:
+-y      Assume the user answered YES on all confirmation requests
+-h      Show this usage help
+"
+
+BASE="$(dirname "$(readlink -f "$0")")"
+. "$BASE/lib.sh"
+
+# Parse arguments
+OPTS=""
+while getopts hy opt; do
+    case "$opt" in
+        h)
+            echo "$USAGE"
+            exit
+            ;;
+        y)
+            OPTS="$OPTS -y"
+            ;;
+        \?)
+            echo "$USAGE"
+            exit 1
+            ;;
+    esac
+done
+shift $(($OPTIND - 1))
+
+cd "$BASE"
+git pull || die "updating dotfiles"
+"$BASE/install" $OPTS
+
