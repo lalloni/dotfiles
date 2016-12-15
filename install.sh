@@ -135,6 +135,3 @@ info "Installing vim plugins..."
 vim +PluginInstall +qall || die "installing vim plugins"
 info "done."
 
-info "Installing tmux plugins..."
-~/.tmux/plugins/tpm/scripts/install_plugins.sh || die "installing tmux plugins"
-info "done."
