@@ -107,8 +107,9 @@ if has('autocmd')
     " Auto break text file lines at 78 characters
     autocmd FileType text setlocal textwidth=78
 
-    " CD to the file directory if there is only one arg
-    autocmd BufEnter * if argc()==1 && bufname("") !~ "^\[A-Za-z0-9\]*://" | lcd %:p:h | endif
+    " CD to the file directory if there is only one arg and refers to a file
+    " in an existent directory.
+    autocmd BufEnter * call CDtoPWDonBufEnter()
 
 endif
 
@@ -338,9 +339,9 @@ endif
 
 " Syntastic {
     if isdirectory(expand("~/.vim/bundle/syntastic"))
-        "set statusline+=%#warningmsg#
-        "set statusline+=%{SyntasticStatuslineFlag()}
-        "set statusline+=%*
+        set statusline+=%#warningmsg#
+        set statusline+=%{SyntasticStatuslineFlag()}
+        set statusline+=%*
         let g:syntastic_always_populate_loc_list = 1
         let g:syntastic_auto_loc_list = 1
         let g:syntastic_check_on_open = 1
@@ -398,3 +399,12 @@ function! DedentCurrentLine()
     normal wi
     call cursor(l, c)
 endfunction
+
+function! CDtoPWDonBufEnter()
+    let bn=bufname("")
+    let p=fnamemodify(bn, ":p:h")."/"
+    if bn !~ "^\[a-zA-Z0-9\]+://" && !empty(glob(p))
+        lcd `=p`
+    endif
+endfunction
+
