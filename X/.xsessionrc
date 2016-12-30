@@ -5,11 +5,13 @@ find -L ~/.Xresources.d -type f -name '*.Xresources' | while read res
 do
     xrdb -merge "$res"
 done
-
 find -L ~/.Xresources.d -type f -executable | while read script
 do
     $script | xrdb -merge
 done
+
+# Load colour profiles
+which dispwin > /dev/null && dispwin -L
 
 # Map "PrintScr" to "Menu"
 xmodmap -e "keycode 107 = Menu"
