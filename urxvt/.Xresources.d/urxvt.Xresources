@@ -1,7 +1,12 @@
 URxvt.depth:			24
 
-URxvt.font:			xft:Input Mono Narrow:size=10:style=regular,xft:PragmataPro Mono:size=10:style=regular
 URxvt.skipBuiltinGlyphs:	true
+
+!URxvt.font:			xft:PragmataPro:size=10.5:style=regular
+!URxvt.letterSpace:		-2
+!URxvt.lineSpace:		-1
+
+URxvt.font:			xft:InputMonoNarrow:size=11:style=regular,xft:PragmataPro:size=11:style=regular
 URxvt.letterSpace:		-1
 URxvt.lineSpace:		-1
 
