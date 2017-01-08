@@ -1,0 +1,111 @@
+#!/usr/bin/env zsh
+#
+#
+# This script have tests for color ramps
+#
+
+zmodload zsh/mathfunc
+
+# estimates luminance of color received in 0 to 5
+# levels of r, g, b
+function lum() {
+    r=$1
+    g=$2
+    b=$3
+    print $((0.2*(20*r) + 0.7*(20*g) + 0.1*(20*b)))
+}
+
+# composes a terminal 256 color palette representation
+# of color received in 0 to 5 levels of r, g, b
+function com() {
+    r=$1
+    g=$2
+    b=$3
+    print $((int(16 + 36 * r + 6 * g + b)))
+}
+
+# returns the more contrasting color from black or white
+# depending on luminance of color received as 0 to 5
+# levels of r, g, b
+function con() {
+    r=$1
+    g=$2
+    b=$3
+    print $(($(lum $r $g $b) > 50 ? 232 : 255))
+}
+
+function rgb24_to_term256() {
+    c=${1#\#}
+    r=$((rint(5.0 * 0x${c[1,2]} / 0xff)))
+    g=$((rint(5.0 * 0x${c[3,4]} / 0xff)))
+    b=$((rint(5.0 * 0x${c[5,6]} / 0xff)))
+    com $r $g $b
+}
+
+# green to black at 50% and then to red at 100%
+# red = 0 to 100 in 50 to 100
+# green = 100 to 0 in 0 to 50
+# blue = 0
+function ramp_green_black_red() {
+    l=$1
+    r=$((rint(0.1 * (l<50 ? 0 : l-50))))
+    g=$((rint(0.1 * (l>50 ? 0 : 50-l))))
+    b=0
+    fgc=$(con $r $g $b)
+    bgc=$(com $r $g $b)
+    print "$fgc $bgc"
+}
+
+# red = 0 to 100 in 0 to 100
+# green = 0
+# blue = 0 to 100 in 0 to 25 and 100 to 0 in 25 to 50
+function ramp_black_blue_red() {
+    l=$1
+    r=$((rint(0.05 * l)))
+    g=0
+    b=$((rint(0.05 * (l<=25 ? 4*l : (l<=50 ? 4*(50-l) : 0)))))
+    fgc=$(con $r $g $b)
+    bgc=$(com $r $g $b)
+    print "$fgc $bgc"
+}
+
+# red = 0 to 100 in 0 to 50
+# green = 0 to 100 in 0 to 50 and 100 to 0 in 50 to 100
+# blue = 0
+function ramp_black_yellow_red() {
+    l=$1
+    r=$((rint(0.05 * (l<50 ? 2*l : 100))))
+    g=$((rint(0.05 * (l<50 ? 2*l : 2*(100-l)))))
+    b=0
+    fgc=$(con $r $g $b)
+    bgc=$(com $r $g $b)
+    print "$fgc $bgc"
+}
+
+function fg256() {
+    print "\e[38;5;${1}m"
+}
+
+function bg256() {
+    print "\e[48;5;${1}m"
+}
+
+function reset() {
+    print "\e[39;49m"
+}
+
+function test() {
+    s=""
+    for l in {0..100}
+    do
+        cs=($($1 $l))
+        fgc="${cs[1]}"
+        bgc="${cs[2]}"
+        s="${s}$(bg256 $bgc)$(fg256 $fgc)#$(reset)"
+    done
+    print "$s $1"
+}
+
+test ramp_green_black_red
+test ramp_black_blue_red
+test ramp_black_yellow_red
