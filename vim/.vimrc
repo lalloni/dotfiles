@@ -147,17 +147,20 @@ map <leader>et :tabedit %%
 map <Tab> :call IndentCurrentLine()<CR>
 map <S-Tab> :call DedentCurrentLine()<CR>
 
-" GVim configuration
-if has('gui_running')
-    set guioptions-=T " no toolbar
-    set lines=40
-    set guifont=Input\ Mono\ Narrow\ 11,PragmataPro\ Mono\ 10
-endif
+" GVim configuration {
+    if has('gui_running')
+        set guioptions-=T " no toolbar
+        set lines=40
+        set guifont=Input\ Mono\ Narrow\ 11,PragmataPro\ Mono\ 10
+    endif
+" }
 
 " Colorscheme configuration {
     set background=dark
     if isdirectory(expand("~/.vim/bundle/base16-vim"))
-        colorscheme base16-google-dark
+        colorscheme base16-unikitty-dark
+        " patch scheme
+        highlight LineNr ctermfg=145 ctermbg=59
     endif
 " }
 
