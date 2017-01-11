@@ -1,0 +1,67 @@
+#!/usr/bin/env zsh
+#
+# XFCE4 Desktop wallpaper changer
+#
+
+USAGE="$(basename "$0") [options]
+
+Options:
+    -d <dir>    directories containing wallpaper images (required)
+    -m <mon>    monitor which wallpaper is to be changed (optional, defaults to all)
+    -l          list monitors and exit
+"
+
+function usage() {
+    print "$USAGE"
+    exit $1
+}
+
+zparseopts -D -E -- -debug=debug h=help -help=help l=listmonitors d+:=dirs m:=monitor || usage $?
+
+dirs=("${(@)dirs:#-d}")
+monitor="${(@)monitor:#-m}"
+
+if [[ $#debug -ne 0 ]] {
+    print "dirs: ${(qq)dirs}"
+    print "monitor: ${(qq)monitor}"
+}
+
+if [[ $#help -ne 0 ]] {
+    usage 0
+}
+
+if [[ $#listmonitors -ne 0 ]] {
+    #DISPLAYS=(${${(M)${(f)"$(xrandr)"}:#* connected *}%% *})
+    DISPLAYS=(${(u)${${(M)${(f)"$(xfconf-query -c xfce4-desktop -l)"}:#/backdrop/*monitor*}#*monitor}%%/*})
+    print ${(F)DISPLAYS}
+    exit 0
+}
+
+if [[ $#dirs -eq 0 ]] {
+    print "No wallpapers directory specified"
+    usage 1
+}
+
+WALLPAPERS=(${^dirs}/**/*.((#i)gif|png|jpg|bmp|svg)(.))
+if [[ $#WALLPAPERS -eq 0 ]] {
+    print "Wallpaper files not found in ${(qq)dirs}"
+    exit 1
+}
+
+WALLPAPER="$WALLPAPERS[RANDOM % $#WALLPAPERS + 1]"
+if [[ $#debug -ne 0 ]] {
+    print "Selected wallpaper ${(qq)WALLPAPER}"
+}
+
+KEYS=(${(M)${(f)"$(xfconf-query -c xfce4-desktop -l)"}:#/backdrop/*/monitor${monitor:-*}/*(last-image|image-path)})
+if [[ $#debug -ne 0 ]] {
+    print "Setting keys:\n\t${(j:\n\t:)KEYS}"
+}
+
+for KEY in $KEYS; {
+    cmd="xfconf-query -c xfce4-desktop -p '$KEY' -s '$WALLPAPER'"
+    if [[ $#debug -ne 0 ]] {
+        echo "Running ${(qqq)cmd}"
+    }
+    ${(Q)${(z)cmd}} || exit $?
+}
