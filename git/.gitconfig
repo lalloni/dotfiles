@@ -14,3 +14,5 @@
     sync = codereview sync
 [credential]
 	helper = store
+[license]
+	author = Pablo Lalloni <plalloni@gmail.com>
