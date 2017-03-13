@@ -16,3 +16,5 @@
 	helper = store
 [license]
 	author = Pablo Lalloni <plalloni@gmail.com>
+[merge]
+	tool = meld
