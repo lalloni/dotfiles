@@ -6,8 +6,15 @@ if isdirectory(expand("~/.vim/bundle/Vundle.vim"))
     source ~/.vim/plugins.vim
 endif
 
+" Configure VIM for true color terminals
+let opt_true_color=1
+
 " Terminal options {
-"    set t_Co=256                            " Force vim to use 256 colors
+    if opt_true_color
+        let &t_8f="\<Esc>[38;2;%lu;%lu;%lum"
+        let &t_8b="\<Esc>[48;2;%lu;%lu;%lum"
+        set termguicolors
+    endif
 " }
 
 " General options {
@@ -47,7 +54,7 @@ endif
     set shortmess=aoOtT                     " Shorten vim information messages
     set showcmd                             " Show (partial) command in status line
     set showmatch                           " Show matching brackets
-    set showmode                            " Show current mode in status line
+    set noshowmode                          " Do not show current mode in status line
     set sidescrolloff=5                     " Characters to keep left/right of cursor when scrolling
     set tabpagemax=15                       " Maximum number of tab pages to open with CLI or tab command
     set wildmenu                            " Show command completion menu
@@ -151,16 +158,14 @@ map <S-Tab> :call DedentCurrentLine()<CR>
     if has('gui_running')
         set guioptions-=T " no toolbar
         set lines=40
-        set guifont=Input\ Mono\ Narrow\ 11,PragmataPro\ Mono\ 10
+        set guifont=Iosevka\ 12,PragmataPro\ Mono\ 11
     endif
 " }
 
 " Colorscheme configuration {
     set background=dark
     if isdirectory(expand("~/.vim/bundle/base16-vim"))
-        colorscheme base16-unikitty-dark
-        " patch scheme
-        highlight LineNr ctermfg=145 ctermbg=59
+        colorscheme base16-isotope
     endif
 " }
 
@@ -182,6 +187,7 @@ map <S-Tab> :call DedentCurrentLine()<CR>
         let g:go_fmt_command = "goimports"
         let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
         let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
+        autocmd FileType go nmap <Leader>d <Plug>(go-def)
         autocmd FileType go nmap <Leader>s <Plug>(go-implements)
         autocmd FileType go nmap <Leader>i <Plug>(go-info)
         autocmd FileType go nmap <Leader>e <Plug>(go-rename)
@@ -191,6 +197,8 @@ map <S-Tab> :call DedentCurrentLine()<CR>
         autocmd FileType go nmap <Leader>gd <Plug>(go-doc)
         autocmd FileType go nmap <Leader>gv <Plug>(go-doc-vertical)
         autocmd FileType go nmap <leader>co <Plug>(go-coverage)
+        autocmd FileType go nmap <leader>p <Plug>(go-import)
+        "autocmd FileType go autocmd BufWritePost * :GoTest
     endif
 " }
 
@@ -258,6 +266,7 @@ map <S-Tab> :call DedentCurrentLine()<CR>
         "let g:airline_left_alt_sep='|'
         "let g:airline_right_sep=' '
         "let g:airline_right_alt_sep='|'
+        "let g:airline_section_z="%3p%% %#__accent_bold#%{g:airline_symbols.linenr}%#__accent_bold#%4l%#__restore__#%#__restore__#%#__accent_bold#%#__accent_bold#/%L%{g:airline_symbols.maxlinenr}%#__restore__#%#__restore__# :%3v"
         if isdirectory(expand("~/.vim/bundle/vim-airline-themes"))
             let g:airline_theme='murmur'
         endif
@@ -371,6 +380,12 @@ map <S-Tab> :call DedentCurrentLine()<CR>
         vmap <Leader>a,, :Tabularize /,\zs<CR>
         nmap <Leader>a<Bar> :Tabularize /<Bar><CR>
         vmap <Leader>a<Bar> :Tabularize /<Bar><CR>
+    endif
+" }
+
+" EasyMotion {
+    if isdirectory(expand("~/.vim/bundle/vim-easymotion"))
+        let g:EasyMotion_smartcase = 1
     endif
 " }
 

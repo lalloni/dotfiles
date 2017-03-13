@@ -7,8 +7,18 @@ Plugin 'VundleVim/Vundle.vim'       " required by vundle
 " Add plugins from here ================
 " ======================================
 
-" Base16 colors
+" Color schemes
 Plugin 'chriskempson/base16-vim'
+Plugin 'marciomazza/vim-brogrammer-theme'
+Plugin 'flazz/vim-colorschemes'
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'tpope/vim-vividchalk'
+
+" Repeat more
+Plugin 'tpope/vim-repeat'
+
+" Add surround editing
+Plugin 'tpope/vim-surround'
 
 " git support
 Plugin 'tpope/vim-fugitive'
@@ -71,6 +81,9 @@ Plugin 'vim-syntastic/syntastic'
 
 " Tabular text alignment
 Plugin 'godlygeek/tabular'
+
+" EasyMotion
+Plugin 'easymotion/vim-easymotion'
 
 " ======================================
 " No more plugins from here ============
