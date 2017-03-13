@@ -48,7 +48,7 @@ Plugin 'fatih/vim-go'
 Plugin 'cespare/vim-toml'
 
 " Automatically close HTML tags
-Plugin 'amirh/HTML-AutoCloseTag'
+Plugin 'vim-scripts/HTML-AutoCloseTag'
 
 " Improve CSS3 syntax highlighting
 Plugin 'hail2u/vim-css3-syntax'
