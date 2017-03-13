@@ -32,6 +32,9 @@ shift $(($OPTIND - 1))
 if askYn "Install basic programs?" $O_YES
 then
     info "Installing basic programs..."
+    sudo apt install -y software-properties-common
+    sudo add-apt-repository -y ppa:jonathonf/vim
+    sudo apt update
     sudo apt install -y \
         cmake \
         ctags \
