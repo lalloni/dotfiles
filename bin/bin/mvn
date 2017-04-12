@@ -1,0 +1,15 @@
+#!/usr/bin/zsh
+MAVEN_VERSION="${MAVEN_VERSION:-3.5.0}"
+MAVEN_HOME="${XDG_CACHE:-$HOME/.cache}/apache-maven/apache-maven-$MAVEN_VERSION"
+die() {
+	exit 1
+}
+if [[ ! -d "$MAVEN_HOME/" ]]; then
+	print "Installing Maven $MAVEN_VERSION into $MAVEN_HOME"
+	T="$(tempfile)"
+	curl -\#L "http://www-us.apache.org/dist/maven/maven-${MAVEN_VERSION%%.*}/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.tar.gz" > "$T" || die
+    mkdir -p "$MAVEN_HOME" || die
+    tar -xzf "$T" -C "$(dirname "$MAVEN_HOME")" || die
+    rm "$T"
+fi
+exec "$MAVEN_HOME/bin/mvn" $*
