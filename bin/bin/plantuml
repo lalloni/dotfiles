@@ -1,0 +1,13 @@
+#!/usr/bin/zsh
+JAR="${XDG_CACHE:-$HOME/.cache}/plantuml/lib/plantuml.jar"
+die() {
+	exit 1
+}
+if [[ ! -r "$JAR" ]]; then
+	print "Downloading PlantUML to $JAR"
+    if [[ ! -d "$(dirname "$JAR")" ]]; then
+        mkdir -p "$(dirname "$JAR")" || die
+    fi
+    curl -\#L "https://downloads.sourceforge.net/project/plantuml/plantuml.jar?r=https%3A%2F%2Fsourceforge.net%2Fprojects%2Fplantuml%2Ffiles%2Fplantuml.jar%2Fdownload%3Fuse_mirror%3Djaist&ts=1491921288&use_mirror=pilotfiber" > "$JAR" || die
+fi
+exec java -jar "$JAR" $*
