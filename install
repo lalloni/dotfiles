@@ -28,6 +28,11 @@ while getopts hy opt; do
 done
 shift $(($OPTIND - 1))
 
+D="$PWD"
+cd "$BASE"
+git submodule update --init --recursive
+cd "$D" && unset D
+
 # Install basic programs
 if askYn "Install basic programs?" $O_YES
 then
