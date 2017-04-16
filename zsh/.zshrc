@@ -1,2 +1,4 @@
-source $HOME/.zshrc-oh-my-zsh
-source $HOME/.zshrc-common
+for s in $HOME/.zsh/rc.d/*.zsh; do
+    source "$s"
+done
+

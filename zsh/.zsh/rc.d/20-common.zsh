@@ -12,5 +12,3 @@ export TERM
 export PAGER=most
 export EDITOR=vim
 
-# Load NVM (if present)
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"

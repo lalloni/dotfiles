@@ -40,7 +40,7 @@ plugins=(
     tmux
     urltools
     zsh-syntax-highlighting
-	history-substring-search # must be loaded *after* zsh-syntax-highlighting
+    history-substring-search # must be loaded *after* zsh-syntax-highlighting
 )
 
 source $ZSH/oh-my-zsh.sh
