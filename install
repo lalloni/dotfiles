@@ -41,7 +41,7 @@ then
     if awk "BEGIN { exit 1 - ($(lsb_release -sr) < 17.04) }"; then
         # to get vim 8 from PPA
         sudo apt install -yq software-properties-common
-        sudo add-apt-repository -yq ppa:jonathonf/vim
+        sudo add-apt-repository -y ppa:jonathonf/vim
     fi
 
     sudo apt update
