@@ -38,8 +38,6 @@ if askYn "Install basic programs?" $O_YES
 then
     info "Installing basic programs..."
 
-    which sudo >/dev/null || su -c "apt-get install sudo"
-
     if awk "BEGIN { exit 1 - ($(lsb_release -sr) < 17.04) }"; then
         # to get vim 8 from PPA
         sudo apt install -y software-properties-common
@@ -49,7 +47,6 @@ then
     sudo apt update
 
     sudo apt install -y \
-        cmake \
         ctags \
         htop \
         most \
