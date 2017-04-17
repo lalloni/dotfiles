@@ -63,17 +63,6 @@ then
     info "done."
 fi
 
-# Install GUI programs
-if askYn "Install GUI programs?" $O_YES
-then
-    info "Installing GUI programs..."
-    sudo apt install -y \
-        rxvt-unicode-256color \
-        vim-gtk \
-        || die "installing programs"
-    info "done."
-fi
-
 info "Linking dotfiles in $HOME..."
 # Check for stow
 if ! which stow >/dev/null; then
