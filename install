@@ -48,6 +48,7 @@ then
 
     sudo apt install -y \
         ctags \
+        curl \
         htop \
         most \
         parallel \
