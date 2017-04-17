@@ -47,6 +47,6 @@ askYn() {
 
 restow() {
     show "re/stowing $1..."
-    command stow -R "$1"
+    command stow -t "$HOME" -R "$1"
 }
 

@@ -40,13 +40,13 @@ then
 
     if awk "BEGIN { exit 1 - ($(lsb_release -sr) < 17.04) }"; then
         # to get vim 8 from PPA
-        sudo apt install -y software-properties-common
-        sudo add-apt-repository -y ppa:jonathonf/vim
+        sudo apt install -yq software-properties-common
+        sudo add-apt-repository -yq ppa:jonathonf/vim
     fi
 
     sudo apt update
 
-    sudo apt install -y \
+    sudo apt install -yq \
         ctags \
         curl \
         htop \
@@ -76,7 +76,7 @@ if ! which stow >/dev/null; then
     fi
 fi
 # Link dotfiles
-cd "$BASE"
+cd "$BASE/home"
 find -maxdepth 1 -type d -not -name '.*' -printf "%P\n" | while read -r d; do
     restow "$d" || die "restowing $d"
 done || die "restowing"
