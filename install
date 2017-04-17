@@ -59,6 +59,7 @@ then
         tmux \
         vim \
         zsh \
+        zip unzip \
         || die "installing programs"
 
     info "done."
