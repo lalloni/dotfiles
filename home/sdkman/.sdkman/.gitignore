@@ -1,3 +1,4 @@
-candidates
-var/broadcast_id
-var/delay_upgrade
+/archives
+/candidates
+/var/broadcast*
+/tmp
