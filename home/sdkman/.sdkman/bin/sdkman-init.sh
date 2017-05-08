@@ -25,7 +25,7 @@ fi
 export SDKMAN_PLATFORM
 
 if [ -z "$SDKMAN_VERSION" ]; then
-	export SDKMAN_VERSION="5.5.8+227"
+	export SDKMAN_VERSION="5.5.9+231"
 fi
 
 if [ -z "$SDKMAN_LEGACY_API" ]; then
