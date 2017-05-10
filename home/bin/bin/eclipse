@@ -1,0 +1,10 @@
+#!/usr/bin/env zsh
+ECLIPSES=~/eclipse
+RUN="$1"
+COMMAND="$ECLIPSES/$RUN/eclipse/eclipse"
+echo "using $COMMAND"
+if [[ ! -x "$COMMAND" ]]; then
+    print "eclipse '$RUN' runtime not found" > /dev/stderr
+    exit 1
+fi
+exec "$COMMAND"
