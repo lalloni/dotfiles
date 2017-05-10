@@ -1,0 +1,10 @@
+#!/bin/zsh
+SOURCE="$1"
+if [[ ! -f "$SOURCE" ]]; then
+	echo "Usage: ${0:t} <markdown file path>"
+	exit 1
+fi
+pandoc -N -t html5 --section-divs --standalone --self-contained --reference-links --toc \
+    --variable urlcolor=blue \
+    -c "$HOME/.config/rendermarkdown/default.css" \
+	"$SOURCE" -o "${SOURCE:r}.pdf"
