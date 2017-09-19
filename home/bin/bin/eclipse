@@ -1,4 +1,5 @@
 #!/usr/bin/env zsh
+. ~/.sdkman/bin/sdkman-init.sh
 ECLIPSES=~/eclipse
 RUN="$1"
 COMMAND="$ECLIPSES/$RUN/eclipse/eclipse"
