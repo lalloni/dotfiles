@@ -36,6 +36,8 @@ plugins=(
     fasd
     git
     golang
+    npm
+    nvm
     ssh-agent
     tmux
     urltools
