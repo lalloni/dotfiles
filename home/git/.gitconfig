@@ -18,3 +18,8 @@
 	author = Pablo Lalloni <plalloni@gmail.com>
 [merge]
 	tool = meld
+[sendemail]
+	smtpserver = smtp.gmail.com
+	smtpuser = plalloni@gmail.com
+	smtpserverport = 587
+	smtpencryption = tls
