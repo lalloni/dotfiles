@@ -85,6 +85,9 @@ Plugin 'godlygeek/tabular'
 " EasyMotion
 Plugin 'easymotion/vim-easymotion'
 
+" Fancy start screen
+Plugin 'mhinz/vim-startify'
+
 " ======================================
 " No more plugins from here ============
 " ======================================
