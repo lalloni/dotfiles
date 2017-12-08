@@ -36,9 +36,14 @@ plugins=(
     fasd
     git
     golang
+    httpie
+    mvn
     npm
     nvm
+    sbt
+    scala
     ssh-agent
+    systemd
     tmux
     urltools
     zsh-syntax-highlighting
