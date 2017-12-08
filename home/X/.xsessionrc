@@ -11,7 +11,7 @@ do
 done
 
 # Load colour profiles
-which dispwin > /dev/null && dispwin -L
+#which dispwin > /dev/null && dispwin -L
 
 # Map "PrintScr" to "Menu"
 xmodmap -e "keycode 107 = Menu"
