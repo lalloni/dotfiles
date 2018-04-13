@@ -40,12 +40,14 @@ plugins=(
     mvn
     npm
     nvm
+    rbenv
     sbt
     scala
     ssh-agent
     systemd
     tmux
     urltools
+    vagrant
     zsh-syntax-highlighting
     history-substring-search # must be loaded *after* zsh-syntax-highlighting
 )
