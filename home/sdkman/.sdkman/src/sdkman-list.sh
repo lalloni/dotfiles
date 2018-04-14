@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 #
-#   Copyright 2012 Marco Vermeulen
+#   Copyright 2017 Marco Vermeulen
 #
 #   Licensed under the Apache License, Version 2.0 (the "License");
 #   you may not use this file except in compliance with the License.
@@ -55,7 +55,7 @@ function __sdkman_build_version_csv {
 	versions_csv=""
 
 	if [[ -d "${SDKMAN_CANDIDATES_DIR}/${candidate}" ]]; then
-		for version in $(find "${SDKMAN_CANDIDATES_DIR}/${candidate}" -maxdepth 1 -mindepth 1 -exec basename '{}' \; | sort -r); do
+		for version in $(find "${SDKMAN_CANDIDATES_DIR}/${candidate}" -maxdepth 1 -mindepth 1 \( -type l -o -type d \) -exec basename '{}' \; | sort -r); do
 			if [[ "$version" != 'current' ]]; then
 				versions_csv="${version},${versions_csv}"
 			fi

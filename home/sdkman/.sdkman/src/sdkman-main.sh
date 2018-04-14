@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 #
-#   Copyright 2012 Marco Vermeulen
+#   Copyright 2017 Marco Vermeulen
 #
 #   Licensed under the Apache License, Version 2.0 (the "License");
 #   you may not use this file except in compliance with the License.
@@ -40,10 +40,6 @@ function sdk {
 			COMMAND="current";;
 		ug)
 			COMMAND="upgrade";;
-		outdated)
-			COMMAND="upgrade";;
-		o)
-			COMMAND="upgrade";;
 		d)
 			COMMAND="default";;
 		b)
@@ -53,7 +49,12 @@ function sdk {
 	#
 	# Various sanity checks and default settings
 	#
-	mkdir -p "$SDKMAN_DIR"
+
+    # Check version and candidates cache
+    if [[ "$COMMAND" != "update" ]]; then
+        ___sdkman_check_candidates_cache "$SDKMAN_CANDIDATES_CACHE" || return 1
+        ___sdkman_check_version_cache
+    fi
 
 	# Always presume internet availability
 	SDKMAN_AVAILABLE="true"

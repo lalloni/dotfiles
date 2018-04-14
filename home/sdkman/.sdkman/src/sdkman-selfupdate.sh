@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 #
-#   Copyright 2012 Marco Vermeulen
+#   Copyright 2017 Marco Vermeulen
 #
 #   Licensed under the Apache License, Version 2.0 (the "License");
 #   you may not use this file except in compliance with the License.
@@ -50,7 +50,7 @@ function __sdkman_auto_update {
 		echo ""
 
 		if [[ "$sdkman_auto_selfupdate" != "true" ]]; then
-			__sdkman_echo_confirm "Would you like to upgrade now? (Y/n)"
+			__sdkman_echo_confirm "Would you like to upgrade now? (Y/n): "
 			read upgrade
 		fi
 
