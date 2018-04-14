@@ -1,0 +1,4 @@
+set guioptions hv
+map <C-Right> rotate rotate-cw
+map <C-Left> rotate rotate-ccw
+
