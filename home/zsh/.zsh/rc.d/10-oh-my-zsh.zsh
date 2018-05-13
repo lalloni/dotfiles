@@ -27,6 +27,7 @@ DISABLE_AUTO_UPDATE="true"
 
 # Plugins to load
 plugins=(
+    cargo
     colored-man-pages
     copybuffer
     dircycle
@@ -40,6 +41,7 @@ plugins=(
     mvn
     npm
     nvm
+    rust
     rbenv
     sbt
     scala
