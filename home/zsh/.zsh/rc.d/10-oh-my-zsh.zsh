@@ -48,6 +48,7 @@ plugins=(
     ssh-agent
     systemd
     tmux
+    oc
     urltools
     vagrant
     zsh-syntax-highlighting
