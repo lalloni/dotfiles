@@ -36,6 +36,7 @@ plugins=(
     docker-compose
     fasd
     git
+    github
     golang
     httpie
     mvn
