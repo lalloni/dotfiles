@@ -1,0 +1,6 @@
+#!/bin/zsh
+set -xEeuo pipefail
+DL="$(curl -sSL https://golang.org/dl/ | pup 'a[class="download"] attr{href}' | grep linux-amd64.tar.gz | head -n 1)"
+curl -#Lo /tmp/go.tar.gz "$DL"
+sudo sh -c "rm -rf /usr/local/go && tar -C /usr/local/ -xvzf /tmp/go.tar.gz"
+go version
