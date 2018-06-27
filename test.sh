@@ -4,7 +4,7 @@ die() {
     exit 1
 }
 if [ $# -eq 0 ]; then
-    DISTS="zesty xenial trusty"
+    DISTS="14.04 16.04 18.04"
     for DIST in $DISTS; do
         echo "################################################################## Testing in $DIST"
         N="dotfiles-$DIST"
@@ -29,7 +29,7 @@ if [ "$1" = "run" ]; then
     export LANG="en_US.UTF-8"
     export LANGUAGE="en_US:en"
     git clone https://github.com/lalloni/dotfiles ~/dotfiles || die
-    ~/dotfiles/install -y || die
+    ~/dotfiles/install.sh || die
     exit
 fi
 echo "Unknown test phase: $1"
