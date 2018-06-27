@@ -7,8 +7,11 @@ USAGE="Usage: $NAME [options]
 
 Options:
     --no-packages       Omit OS packages installation
-    --no-vim-plugins    Omit VIM plugins installation
-    --no-link           Omit linking files to home
+    --no-vimplugins     Omit VIM plugins installation
+    --no-fishplugins    Omit Fish plugins installation
+    --local             Omit all installations
+                        (i.e. --no-packages --no-vimplugins --no-fishplugins)
+    --no-link           Omit dotfiles linking
     --debug             Enable debug mode
     --help / -h         Show this usage help"
 
@@ -40,16 +43,17 @@ restow() {
     command stow -t "$HOME" -R "$1"
 }
 
-OPTS="$(getopt -o h -l help,no-packages,no-vim-plugins,no-link,debug -n "$NAME" -- "$@")"
+OPTS="$(getopt -o h -l help,local,no-packages,no-vimplugins,no-link,debug -n "$NAME" -- "$@")"
 if [[ $? -ne 0 ]]
 then
-    die "Invalid command options.\n$USAGE"
+    die "Invalid command options."$'\n'"$USAGE"
     exit 1
 fi
 
 O_DEBUG=false
 O_PACKAGES=true
 O_VIMPLUGINS=true
+O_FISHPLUGINS=true
 O_LINK=true
 
 while true
@@ -61,11 +65,13 @@ do
     case "$1" in
         -h|--help) echo "$USAGE"; exit 0;;
         --debug) O_DEBUG=true;;
+        --local) O_PACKAGES=false; O_VIMPLUGINS=false; O_FISHPLUGINS=false;;
         --no-packages) O_PACKAGES=false;;
         --no-vimplugins) O_VIMPLUGINS=false;;
+        --no-fishplugins) O_FISHPLUGINS=false;;
         --no-link) O_LINK=false;;
         --) break;;
-        *) die "Invalid option: '$1'\n$USAGE";;
+        *) die "Invalid option: $1"$'\n'"$USAGE";;
     esac
     shift
 done
@@ -74,6 +80,7 @@ debug "Using options:
   » print debug information:    $O_DEBUG
   » install packages:           $O_PACKAGES
   » install vim plugins:        $O_VIMPLUGINS
+  » install fish plugins:       $O_FISHPLUGINS
   » link home files:            $O_LINK
 "
 
@@ -87,18 +94,22 @@ if [[ $O_PACKAGES == true ]]
 then
     info "Installing basic programs..."
 
+    sudo apt install -yq software-properties-common
+
+    # to get vim 8 from PPA
     if awk "BEGIN { exit 1 - ($(lsb_release -sr) < 17.04) }"
     then
-        # to get vim 8 from PPA
-        sudo apt install -yq software-properties-common
-        sudo add-apt-repository -y ppa:jonathonf/vim
+        sudo apt-add-repository -y ppa:jonathonf/vim
     fi
 
-    sudo apt update
+    sudo apt-add-repository -y ppa:fish-shell/release-2
+
+    sudo apt update -q
 
     sudo apt install -yq \
         ctags \
         curl \
+        fish \
         htop \
         most \
         parallel \
@@ -146,6 +157,14 @@ fi
 if [[ $O_VIMPLUGINS == true ]]
 then
     info "Installing vim plugins..."
-    vim +PluginInstall +qall
+    env SHELL=$(which sh) vim +PluginInstall +qall
+    info "done."
+fi
+
+# Install fish plugins
+if which fish >/dev/null && [[ $O_FISHPLUGINS == true ]]
+then
+    info "Installing fish plugins..."
+    fish -c "fisher"
     info "done."
 fi
