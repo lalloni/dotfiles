@@ -43,6 +43,17 @@ restow() {
     command stow -t "$HOME" -R "$1"
 }
 
+addrepo() {
+    if ! dpkg -l software-properties-common &>/dev/null
+    then
+        sudo apt install -yq software-properties-common
+    fi
+    if ! apt-cache policy | awk '/http:/{print  $2 $3}' | sort -u | grep -q "${1#ppa:}"
+    then
+        apt-add-repository -y "$1"
+    fi
+}
+
 OPTS="$(getopt -o h -l help,local,no-packages,no-vimplugins,no-link,debug -n "$NAME" -- "$@")"
 if [[ $? -ne 0 ]]
 then
@@ -94,15 +105,13 @@ if [[ $O_PACKAGES == true ]]
 then
     info "Installing basic programs..."
 
-    sudo apt install -yq software-properties-common
-
     # to get vim 8 from PPA
     if awk "BEGIN { exit 1 - ($(lsb_release -sr) < 17.04) }"
     then
-        sudo apt-add-repository -y ppa:jonathonf/vim
+        addrepo ppa:jonathonf/vim
     fi
 
-    sudo apt-add-repository -y ppa:fish-shell/release-2
+    addrepo ppa:fish-shell/release-2
 
     sudo apt update -q
 
@@ -114,6 +123,8 @@ then
         most \
         parallel \
         pv \
+        python-pip \
+        virtualenv \
         ranger \
         silversearcher-ag \
         stow \
@@ -122,6 +133,8 @@ then
         vim \
         zsh \
         zip
+
+    pip install thefuck
 
     info "done."
 fi

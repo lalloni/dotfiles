@@ -1,2 +1,9 @@
 oh-my-fish/theme-bobthefish
-jhillyerd/plugin-git
+fisherman/cprintf
+fisherman/debug
+oh-my-fish/plugin-fasd
+fisherman/fzf
+fisherman/g2
+fisherman/getopts
+fisherman/git_util
+oh-my-fish/plugin-thefuck
