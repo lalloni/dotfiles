@@ -5,5 +5,8 @@ oh-my-fish/plugin-fasd
 fisherman/fzf
 fisherman/g2
 fisherman/getopts
+jhillyerd/plugin-git
 fisherman/git_util
+evanlucas/fish-kubectl-completions
+reitzig/sdkman-for-fish
 oh-my-fish/plugin-thefuck
