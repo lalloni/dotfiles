@@ -1,0 +1,29 @@
+#!/usr/bin/env zsh
+
+setopt pipefail
+
+die() {
+    print "error: $1"
+    exit 1
+}
+
+[[ $# -eq 2 ]] || die "usage: ${0:t} <key> <file>"
+
+O_KEY="$1"
+O_INPUT="$2"
+
+print "using key '$O_KEY'"
+
+[[ -f "$O_INPUT" ]] || die "input file '$O_INPUT' not found"
+print "converting file '$O_INPUT'"
+
+OUTPUT_NAME="$(ffprobe -of json -show_format -v quiet -i "$O_INPUT" | jq -r '.format.tags.artist + " - " + .format.tags.title').m4a"
+[[ $? -eq 0 ]] || die "processing input file metadata"
+OUTPUT="${O_INPUT:a:h}/$OUTPUT_NAME"
+
+print "converting $O_INPUT to $OUTPUT"
+ffmpeg -activation_bytes "$O_KEY" -i "$O_INPUT" -vn -c:a copy "$OUTPUT" || die "converting audiobook"
+
+FINAL_OUTPUT="${OUTPUT:r}.m4b"
+print "renaming $OUTPUT to $FINAL_OUTPUT"
+mv "$OUTPUT" "$FINAL_OUTPUT" || die "renaming converted audiobook"
