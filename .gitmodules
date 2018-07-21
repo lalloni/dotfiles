@@ -7,9 +7,6 @@
 [submodule "home/vim/.vim/bundle/Vundle.vim"]
 	path = home/vim/.vim/bundle/Vundle.vim
 	url = https://github.com/VundleVim/Vundle.vim
-[submodule "home/vim/.oh-my-zsh-custom"]
-	path = home/vim/.oh-my-zsh-custom
-	url = https://github.com/lalloni/oh-my-zsh-custom
 [submodule "home/rbenv/.rbenv"]
 	path = home/rbenv/.rbenv
 	url = https://github.com/rbenv/rbenv.git
@@ -19,3 +16,6 @@
 [submodule "lib/fisherman"]
 	path = lib/fisherman
 	url = https://github.com/fisherman/fisherman.git
+[submodule "home/zsh/.oh-my-zsh-custom"]
+	path = home/zsh/.oh-my-zsh-custom
+	url = https://github.com/lalloni/oh-my-zsh-custom.git
