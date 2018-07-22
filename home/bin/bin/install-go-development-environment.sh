@@ -1,4 +1,5 @@
 #!/bin/bash
+set -Eeuo pipefail
 GO_VERSION=1.10.3
 GORELEASER_VERSION=0.79.1
 die() {
