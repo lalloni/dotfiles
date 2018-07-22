@@ -1,4 +1,9 @@
 set guioptions hv
 map <C-Right> rotate rotate-cw
 map <C-Left> rotate rotate-ccw
-
+map <PageUp> scroll full-up
+map <PageDown> scroll full-down
+map <C-PageUp> navigate previous
+map <C-PageDown> navigate next
+map <S-PageUp> scroll page-top
+map <S-PageDown> scroll page-bottom
