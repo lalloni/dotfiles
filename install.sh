@@ -1,4 +1,6 @@
 #!/bin/bash
+
+#set -x # uncomment for debugging
 set -Eeuo pipefail
 
 BASE="$(dirname "$(readlink -f "$0")")"
@@ -7,50 +9,97 @@ USAGE="Usage: $NAME [options]
 
 Options:
     --no-packages       Omit OS packages installation
-    --no-vimplugins     Omit VIM plugins installation
-    --no-fishplugins    Omit Fish plugins installation
     --local             Omit all installations
                         (i.e. --no-packages --no-vimplugins --no-fishplugins)
     --no-link           Omit dotfiles linking
     --debug             Enable debug mode
     --help / -h         Show this usage help"
 
+if [[ $UID -ne 0 ]]
+then
+    SUDO="sudo"
+else
+    SUDO=""
+fi
+
+APT_REPOS_NEED_UPDATE="yes"
+
+out() {
+    echo "················>" $*
+}
+
 debug() {
-    if [[ "$O_DEBUG" = true ]]; then
-        echo "*** $*"
+    if [[ "$O_DEBUG" == true ]]; then
+        out "debug: $*"
     fi
 }
 
 info() {
-    echo "··· $1"
+    out "info: $*"
 }
 
 show() {
-    echo "    $1"
+    out "show: $*"
 }
 
 error() {
-    echo "××× $1"
+    out "error: $*"
 }
 
 die() {
-    error "$*"
+    error $*
     exit 1
 }
 
 restow() {
-    show "re/stowing $1..."
-    command stow -t "$HOME" -R "$1"
+    info "Stowing $1..."
+    command stow --ignore='install.sh' -t "$HOME" -R "$1"
+    if [[ -x "$1/install.sh" ]]
+    then
+        info "Running install script $1/install.sh..."
+        source "$1/install.sh"
+        info "Finished running install script $1/install.sh."
+    fi
+    info "Finished stowing $1."
 }
 
-addrepo() {
+aptaddrepo() {
     if ! dpkg -l software-properties-common &>/dev/null
     then
-        sudo apt install -yq software-properties-common
+        $SUDO apt install -yq software-properties-common
     fi
     if ! apt-cache policy | awk '/http:/{print  $2 $3}' | sort -u | grep -q "${1#ppa:}"
     then
         apt-add-repository -y "$1"
+    fi
+    APT_REPOS_NEED_UPDATE="yes"
+}
+
+aptupdate() {
+    if [[ $APT_REPOS_NEED_UPDATE == yes ]]
+    then
+        $SUDO apt update -q
+    fi
+    APT_REPOS_NEED_UPDATE="no"
+}
+
+aptinstall() {
+    aptupdate
+    $SUDO apt install -yq $*
+}
+
+aptensurepkg() {
+    local need=""
+    for p in $*
+    do
+        if ! dpkg -l $p &>/dev/null
+        then
+           need="$need $p"
+        fi
+    done
+    if [[ -n "$need" ]]
+    then
+        aptinstall $need
     fi
 }
 
@@ -61,11 +110,9 @@ then
     exit 1
 fi
 
-O_DEBUG=false
-O_PACKAGES=true
-O_VIMPLUGINS=true
-O_FISHPLUGINS=true
-O_LINK=true
+export O_DEBUG=false
+export O_PACKAGES=true
+export O_LINK=true
 
 while true
 do
@@ -76,10 +123,7 @@ do
     case "$1" in
         -h|--help) echo "$USAGE"; exit 0;;
         --debug) O_DEBUG=true;;
-        --local) O_PACKAGES=false; O_VIMPLUGINS=false; O_FISHPLUGINS=false;;
         --no-packages) O_PACKAGES=false;;
-        --no-vimplugins) O_VIMPLUGINS=false;;
-        --no-fishplugins) O_FISHPLUGINS=false;;
         --no-link) O_LINK=false;;
         --) break;;
         *) die "Invalid option: $1"$'\n'"$USAGE";;
@@ -87,56 +131,42 @@ do
     shift
 done
 
-debug "Using options:
+debug "
+Using options:
   » print debug information:    $O_DEBUG
   » install packages:           $O_PACKAGES
-  » install vim plugins:        $O_VIMPLUGINS
-  » install fish plugins:       $O_FISHPLUGINS
   » link home files:            $O_LINK
 "
+
+info "Ensuring git is installed..."
+aptensurepkg git
+info "Finished ensuring git is installed."
 
 info "Initializing dotfiles git submodules..."
 cd "$BASE"
 git submodule update --init --recursive
-info "done."
+info "Finished initializing dotfiles git submodules."
 
 # Install packages
 if [[ $O_PACKAGES == true ]]
 then
-    info "Installing basic programs..."
+    info "Installing programs..."
 
-    # to get vim 8 from PPA
-    if awk "BEGIN { exit 1 - ($(lsb_release -sr) < 17.04) }"
-    then
-        addrepo ppa:jonathonf/vim
-    fi
-
-    addrepo ppa:fish-shell/release-2
-
-    sudo apt update -q
-
-    sudo apt install -yq \
-        ctags \
+    aptensurepkg \
         curl \
-        fish \
         htop \
         most \
         parallel \
         pv \
-        python-pip \
-        virtualenv \
         ranger \
         silversearcher-ag \
         stow \
         tmux \
         unzip \
-        vim \
         zsh \
         zip
 
-    pip install thefuck
-
-    info "done."
+    info "Finished installing programs."
 fi
 
 # Link dotfiles
@@ -149,35 +179,23 @@ then
     then
         if [[ $O_PACKAGES == true ]]
         then
-            sudo apt install -yq stow
+            aptensurepkg stow
         else
-            die "stow is not installed and I was run with --no-packages option"
+            die "Stow is not installed and I was run with --no-packages option"
         fi
     fi
 
     # Link dotfiles
     cd "$BASE/home"
-    find -maxdepth 1 -type d -not -name '.*' -printf "%P\n" | \
-    while read -r d
+    mapfile -t PROCESS < <(find -maxdepth 1 -type d -not -name '.*' -printf "%P\n" | sort -f)
+    info "Directories to process: ${#PROCESS[@]}"
+    for DIR in "${PROCESS[@]}"
     do
-        restow "$d"
+        info ">>> Processing home/$DIR..."
+        restow "$DIR"
+        info "<<< Finished processing home/$DIR."
+        cd "$BASE/home" # just in case
     done
 
-    info "done."
-fi
-
-# Install vim plugins
-if [[ $O_VIMPLUGINS == true ]]
-then
-    info "Installing vim plugins..."
-    env SHELL=$(which sh) vim +PluginInstall +qall
-    info "done."
-fi
-
-# Install fish plugins
-if which fish >/dev/null && [[ $O_FISHPLUGINS == true ]]
-then
-    info "Installing fish plugins..."
-    fish -c "fisher"
-    info "done."
+    info "Finished linking dotfiles in $HOME."
 fi
