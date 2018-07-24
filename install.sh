@@ -15,7 +15,7 @@ Options:
     --debug             Enable debug mode
     --help / -h         Show this usage help"
 
-if [[ $UID -ne 0 ]]
+if [[ $(id -u) -ne 0 ]]
 then
     SUDO="sudo"
 else
@@ -92,7 +92,7 @@ aptensurepkg() {
     local need=""
     for p in $*
     do
-        if ! dpkg -l $p &>/dev/null
+        if ! dpkg -s $p &>/dev/null
         then
            need="$need $p"
         fi
@@ -161,6 +161,7 @@ then
         ranger \
         silversearcher-ag \
         stow \
+        sudo \
         tmux \
         unzip \
         zsh \
