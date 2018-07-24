@@ -1,5 +1,5 @@
 #!/bin/bash
-set -Eeuo pipefail
+set -xEeuo pipefail
 GO_VERSION=1.10.3
 GORELEASER_VERSION=0.79.1
 die() {
@@ -13,15 +13,16 @@ checkpath() {
     fi
 }
 PRE=""
-if [[ $UID -ne 0 ]]
+if [[ $(id -u) -ne 0 ]]
 then
     if ! which sudo > /dev/null
     then
         die "instalar sudo antes de correr este script"
     fi
     PRE=sudo
+    $PRE sudo ls >/dev/null
 fi
-which curl > /dev/null || $PRE apt update && apt -yq install curl
+which curl >/dev/null || $PRE apt -yq install curl
 if [[ -d /usr/local/go ]] && /usr/local/go/bin/go version | grep -v "$GO_VERSION"
 then
     rm -rf /usr/local/go
