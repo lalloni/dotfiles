@@ -1,0 +1,10 @@
+#!/bin/bash
+set -Eeuo pipefail
+BINARY="${XDG_CACHE:-$HOME/.cache}/fasd/fasd"
+if [[ ! -r "$BINARY" || ! -x "$BINARY" ]]
+then
+    mkdir -p "$(dirname "$BINARY")" > /dev/null
+    curl -sSLo "$BINARY" "https://raw.githubusercontent.com/clvv/fasd/1.0.1/fasd"
+    chmod +x "$BINARY"
+fi
+exec "$BINARY" $*
