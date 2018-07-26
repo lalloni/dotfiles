@@ -1,0 +1,10 @@
+#!/bin/bash
+set -Eeuo pipefail
+BINARY="${XDG_CACHE:-$HOME/.cache}/docker-machine/docker-machine"
+if [[ ! -r "$BINARY" || ! -x "$BINARY" ]]
+then
+    mkdir -p "$(dirname "$BINARY")" > /dev/null
+    curl -sSLo "$BINARY" "https://github.com/docker/machine/releases/download/v0.15.0/docker-machine-$(uname -s)-$(uname -m)"
+    chmod +x "$BINARY"
+fi
+exec "$BINARY" $*
