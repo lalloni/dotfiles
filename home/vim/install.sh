@@ -7,7 +7,7 @@ then
 fi
 
 # Packages
-aptensurepkg vim-nox ctags
+aptensurepkg vim-nox exuberant-ctags
 
 # Plugins
 info "Installing vim plugins..."
