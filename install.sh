@@ -78,7 +78,7 @@ aptinstall() {
 
 aptensurepkg() {
     local need=""
-    for p in $*
+    for p in "$@"
     do
         if ! dpkg -s $p &>/dev/null
         then
@@ -92,9 +92,7 @@ aptensurepkg() {
 }
 
 restow() {
-    info "Stowing $1 into $HOME..."
     command stow --ignore='install.sh' -t "$HOME" -R "$@"
-    info "Finished stowing $1."
 }
 
 replacehomelink() {
@@ -177,6 +175,7 @@ then
         stow \
         sudo \
         tmux \
+        tree \
         unzip \
         zsh \
         zip
