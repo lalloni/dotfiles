@@ -7,4 +7,4 @@ then
     curl -sSLo "$BINARY" https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
     chmod +x "$BINARY"
 fi
-exec "$BINARY" $*
+exec "$BINARY" "$@"

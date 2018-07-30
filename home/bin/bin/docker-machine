@@ -7,4 +7,4 @@ then
     curl -sSLo "$BINARY" "https://github.com/docker/machine/releases/download/v0.15.0/docker-machine-$(uname -s)-$(uname -m)"
     chmod +x "$BINARY"
 fi
-exec "$BINARY" $*
+exec "$BINARY" "$@"

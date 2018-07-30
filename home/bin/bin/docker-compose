@@ -7,4 +7,4 @@ then
     curl -sSLo "$BINARY" "https://github.com/docker/compose/releases/download/1.21.2/docker-compose-$(uname -s)-$(uname -m)"
     chmod +x "$BINARY"
 fi
-exec "$BINARY" $*
+exec "$BINARY" "$@"

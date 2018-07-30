@@ -7,4 +7,4 @@ then
     curl -sSLo "$BINARY" "https://raw.githubusercontent.com/clvv/fasd/1.0.1/fasd"
     chmod +x "$BINARY"
 fi
-exec "$BINARY" $*
+exec "$BINARY" "$@"

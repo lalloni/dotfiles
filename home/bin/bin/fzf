@@ -8,4 +8,4 @@ then
         | tar -C "$(dirname "$BINARY")" -xz fzf
     chmod +x "$BINARY"
 fi
-exec "$BINARY" $*
+exec "$BINARY" "$@"
