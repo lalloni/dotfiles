@@ -25,7 +25,7 @@ fi
 APT_REPOS_NEED_UPDATE="yes"
 
 out() {
-    echo "················>" $*
+    echo "················>" "$@"
 }
 
 debug() {
@@ -35,32 +35,20 @@ debug() {
 }
 
 info() {
-    out "info: $*"
+    out "info: $@"
 }
 
 show() {
-    out "show: $*"
+    out "show: $@"
 }
 
 error() {
-    out "error: $*"
+    out "error: $@"
 }
 
 die() {
-    error $*
+    error "$@"
     exit 1
-}
-
-restow() {
-    info "Stowing $1..."
-    command stow --ignore='install.sh' -t "$HOME" -R "$1"
-    if [[ -x "$1/install.sh" ]]
-    then
-        info "Running install script $1/install.sh..."
-        source "$1/install.sh"
-        info "Finished running install script $1/install.sh."
-    fi
-    info "Finished stowing $1."
 }
 
 aptaddrepo() {
@@ -101,6 +89,32 @@ aptensurepkg() {
     then
         aptinstall $need
     fi
+}
+
+restow() {
+    info "Stowing $1 into $HOME..."
+    command stow --ignore='install.sh' -t "$HOME" -R "$@"
+    info "Finished stowing $1."
+}
+
+replacehomelink() {
+    if [[ -e "$HOME/$1" ]]
+    then
+        rm -rf "$HOME/$1"
+    fi
+    local PARENT="$(dirname "$HOME/$1")"
+    if [[ ! -d "$PARENT" ]]
+    then
+        mkdir -p "$PARENT"
+    fi
+    ln -rs "$1" "$HOME/$1"
+}
+
+replacehomelinks() {
+    for l in "$@"
+    do
+        replacehomelink "$l"
+    done
 }
 
 OPTS="$(getopt -o h -l help,local,no-packages,no-vimplugins,no-link,debug -n "$NAME" -- "$@")"
@@ -193,7 +207,18 @@ then
     for DIR in "${PROCESS[@]}"
     do
         info ">>> Processing home/$DIR..."
-        restow "$DIR"
+        if [[ -x "$DIR/install.sh" ]]
+        then
+            info "  · Running install script $DIR/install.sh..."
+            pushd "$DIR" > /dev/null
+            source "./install.sh"
+            popd > /dev/null
+            info "  · Finished running install script $DIR/install.sh."
+        else
+            info "  · Restowing $DIR into $HOME..."
+            restow "$DIR"
+            info "  · Finished restowing $DIR."
+        fi
         info "<<< Finished processing home/$DIR."
         cd "$BASE/home" # just in case
     done

@@ -1,3 +1,5 @@
+# Link config dir
+replacehomelink ".config/fish"
 
 # Get fish 2.x from PPA if ubuntu version doesn't have it
 aptensurepkg lsb-release
