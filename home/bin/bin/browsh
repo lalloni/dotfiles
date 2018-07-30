@@ -1,0 +1,10 @@
+#!/bin/bash
+set -Eeuo pipefail
+BINARY="${XDG_CACHE:-$HOME/.cache}/browsh/browsh"
+if [[ ! -r "$BINARY" || ! -x "$BINARY" ]]
+then
+    mkdir -p "$(dirname "$BINARY")" > /dev/null
+    curl -sSLo "$BINARY" "https://github.com/browsh-org/browsh/releases/download/v1.4.10/browsh_1.4.10_linux_amd64"
+    chmod +x "$BINARY"
+fi
+exec "$BINARY" "$@"
