@@ -1,3 +1,4 @@
+restow --no-folding .
 
 # Get vim 8 from PPA if ubuntu version doesn't have it
 aptensurepkg lsb-release
