@@ -1,5 +1,5 @@
-# Link config dir
-replacehomelink ".config/fish"
+# Link everything from $HOME
+restow --no-folding .
 
 # Get fish 2.x from PPA if ubuntu version doesn't have it
 aptensurepkg lsb-release
@@ -29,11 +29,11 @@ fi
 if [[ -d "$HOME/go" ]]
 then
     fish -c 'set -Ux GOPATH $HOME/go'
-    fish -c 'set -U fish_user_paths $GOPATH/bin $fish_user_paths'
+    fish -c 'set -U fish_user_paths (dedup $GOPATH/bin $fish_user_paths)'
 fi
-fish -c 'set -U fish_user_paths $HOME/bin $fish_user_paths'
-fish -c 'set -Ux FZF_COMPLETE 1'
-fish -c 'set -Ux FZF_DEFAULT_OPTS "--height 40%"'
+fish -c 'set -U fish_user_paths (dedup $HOME/bin $fish_user_paths)'
+fish -c 'set -Ux FZF_COMPLETE 3'
+fish -c 'set -Ux FZF_DEFAULT_OPTS "--height 50%"'
 fish -c 'set -Ux FZF_LEGACY_KEYBINDINGS 0'
-fish -c 'set -Ux FZF_TMUX_HEIGHT "40%"'
+fish -c 'set -Ux FZF_TMUX_HEIGHT "50%"'
 info "Finished configuring fish."
