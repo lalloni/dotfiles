@@ -1,8 +1,0 @@
-#!/bin/bash
-BINARY="$HOME/.py3env/bin/fuck"
-if [[ -x "$BINARY" ]]
-then
-    exec "$BINARY" $*
-fi
-echo 'Thefuck is not installed. Please run $DOTFILES/install.sh'
-exit 1
