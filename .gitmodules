@@ -19,3 +19,6 @@
 [submodule "home/zsh/.oh-my-zsh-custom"]
 	path = home/zsh/.oh-my-zsh-custom
 	url = https://github.com/lalloni/oh-my-zsh-custom.git
+[submodule "home/asdf/.asdf"]
+	path = home/asdf/.asdf
+	url = https://github.com/asdf-vm/asdf.git
