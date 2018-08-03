@@ -17,7 +17,7 @@
 [license]
 	author = Pablo Lalloni <plalloni@gmail.com>
 [merge]
-	tool = meld
+	tool = kdiff3
 [sendemail]
 	smtpserver = smtp.gmail.com
 	smtpuser = plalloni@gmail.com
