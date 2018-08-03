@@ -7,12 +7,6 @@
 [submodule "home/vim/.vim/bundle/Vundle.vim"]
 	path = home/vim/.vim/bundle/Vundle.vim
 	url = https://github.com/VundleVim/Vundle.vim
-[submodule "home/rbenv/.rbenv"]
-	path = home/rbenv/.rbenv
-	url = https://github.com/rbenv/rbenv.git
-[submodule "home/ruby-build/.rbenv/plugins/ruby-build"]
-	path = home/ruby-build/.rbenv/plugins/ruby-build
-	url = https://github.com/rbenv/ruby-build.git
 [submodule "lib/fisherman"]
 	path = lib/fisherman
 	url = https://github.com/fisherman/fisherman.git
