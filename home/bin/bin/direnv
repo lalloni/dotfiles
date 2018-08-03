@@ -1,0 +1,10 @@
+#!/bin/bash
+set -Eeuo pipefail
+BINARY="${XDG_CACHE:-$HOME/.cache}/direnv/direnv"
+if [[ ! -r "$BINARY" || ! -x "$BINARY" ]]
+then
+    mkdir -p "$(dirname "$BINARY")" > /dev/null
+    curl -sSLo "$BINARY" "https://github.com/direnv/direnv/releases/download/v2.17.0/direnv.linux-amd64"
+    chmod +x "$BINARY"
+fi
+exec "$BINARY" "$@"
