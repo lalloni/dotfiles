@@ -1,6 +1,6 @@
 #!/bin/bash
 set -Eeuo pipefail
-BINARY="${XDG_CACHE:-$HOME/.cache}/fzf/fzf"
+BINARY="${XDG_CACHE:-$HOME/.cache}/bin/fzf"
 if [[ ! -r "$BINARY" || ! -x "$BINARY" ]]
 then
     mkdir -p "$(dirname "$BINARY")" > /dev/null

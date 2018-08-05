@@ -1,0 +1,12 @@
+#!/bin/bash
+set -Eeuo pipefail
+BINARY="${XDG_CACHE:-$HOME/.cache}/bin/peco"
+if [[ ! -r "$BINARY" || ! -x "$BINARY" ]]
+then
+    mkdir -p "$(dirname "$BINARY")" > /dev/null
+    curl -sSLo - "https://github.com/peco/peco/releases/download/v0.5.3/peco_linux_amd64.tar.gz" \
+        | tar -C "$(dirname "$BINARY")" -xzO peco_linux_amd64/peco \
+        > "$BINARY"
+    chmod +x "$BINARY"
+fi
+exec "$BINARY" "$@"

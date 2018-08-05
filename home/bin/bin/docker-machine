@@ -1,6 +1,6 @@
 #!/bin/bash
 set -Eeuo pipefail
-BINARY="${XDG_CACHE:-$HOME/.cache}/docker-machine/docker-machine"
+BINARY="${XDG_CACHE:-$HOME/.cache}/bin/docker-machine"
 if [[ ! -r "$BINARY" || ! -x "$BINARY" ]]
 then
     mkdir -p "$(dirname "$BINARY")" > /dev/null
