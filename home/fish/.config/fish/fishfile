@@ -6,6 +6,7 @@ oh-my-fish/theme-bobthefish
 fisherman/cprintf
 fisherman/debug
 oh-my-fish/plugin-direnv
+barnybug/docker-fish-completion
 oh-my-fish/plugin-docker-machine
 oh-my-fish/plugin-fasd
 oh-my-fish/plugin-foreign-env
@@ -16,6 +17,7 @@ oh-my-fish/plugin-git-flow
 fisherman/git_util
 oh-my-fish/plugin-grc
 vincentjames501/fish-kill-on-port
+evanlucas/fish-kubectl-completions
 oh-my-fish/plugin-pbcopy
 oh-my-fish/plugin-peco
 reitzig/sdkman-for-fish
