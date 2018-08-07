@@ -206,7 +206,7 @@ then
     for DIR in "${PROCESS[@]}"
     do
         info ">>> Processing home/$DIR..."
-        if [[ -x "$DIR/install.sh" ]]
+        if [[ -r "$DIR/install.sh" ]]
         then
             info "  · Running install script $DIR/install.sh..."
             pushd "$DIR" > /dev/null
