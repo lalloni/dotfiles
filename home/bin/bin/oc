@@ -1,0 +1,12 @@
+#!/bin/bash
+set -Eeuo pipefail
+BINARY="${XDG_CACHE:-$HOME/.cache}/bin/oc"
+if [[ ! -r "$BINARY" || ! -x "$BINARY" ]]
+then
+    mkdir -p "$(dirname "$BINARY")" > /dev/null
+    curl -sSLo - "https://github.com/openshift/origin/releases/download/v3.9.0/openshift-origin-client-tools-v3.9.0-191fece-linux-64bit.tar.gz" \
+        | tar -C "$(dirname "$BINARY")" -xzO "openshift-origin-client-tools-v3.9.0-191fece-linux-64bit/oc" \
+        > "$BINARY"
+    chmod +x "$BINARY"
+fi
+exec "$BINARY" "$@"
