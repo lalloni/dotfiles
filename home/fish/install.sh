@@ -9,7 +9,7 @@ then
 fi
 
 # Packages
-aptensurepkg fish
+aptensurepkg fish grc
 
 # Install fish plugins
 info "Installing fish plugins..."
