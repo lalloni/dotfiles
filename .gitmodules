@@ -16,3 +16,6 @@
 [submodule "home/asdf/.asdf"]
 	path = home/asdf/.asdf
 	url = https://github.com/asdf-vm/asdf.git
+[submodule "home/nodenv/.nodenv"]
+	path = home/nodenv/.nodenv
+	url = https://github.com/nodenv/nodenv.git
