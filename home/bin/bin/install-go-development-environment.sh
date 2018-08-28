@@ -1,7 +1,7 @@
 #!/bin/bash
 set -xEeuo pipefail
-GO_VERSION=1.10.3
-GORELEASER_VERSION=0.79.1
+GO_VERSION=1.11
+GORELEASER_VERSION=0.83.3
 die() {
     echo "$*" >&2
     exit 1
