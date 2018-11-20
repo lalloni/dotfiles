@@ -4,16 +4,13 @@ oh-my-fish/plugin-bang-bang
 edc/bass
 oh-my-fish/theme-bobthefish
 oh-my-fish/plugin-direnv
-barnybug/docker-fish-completion
 oh-my-fish/plugin-docker-machine
 oh-my-fish/plugin-fasd
 oh-my-fish/plugin-foreign-env
-fisherman/fzf
 jhillyerd/plugin-git
 oh-my-fish/plugin-git-flow
 oh-my-fish/plugin-grc
 vincentjames501/fish-kill-on-port
-evanlucas/fish-kubectl-completions
 oh-my-fish/plugin-nodenv
 oh-my-fish/plugin-pbcopy
 oh-my-fish/plugin-peco
