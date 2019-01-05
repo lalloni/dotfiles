@@ -1,1 +1,1 @@
-../../../../../lib/fisherman/fisher.fish
+../../../../../lib/fisher/fisher.fish
