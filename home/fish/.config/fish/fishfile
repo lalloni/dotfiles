@@ -10,9 +10,9 @@ oh-my-fish/plugin-foreign-env
 jhillyerd/plugin-git
 oh-my-fish/plugin-grc
 vincentjames501/fish-kill-on-port
-oh-my-fish/plugin-nodenv
 oh-my-fish/plugin-pbcopy
 oh-my-fish/plugin-peco
 reitzig/sdkman-for-fish
 oh-my-fish/plugin-tab
 oh-my-fish/plugin-thefuck
+jorgebucaran/fish-nvm
