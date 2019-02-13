@@ -8,7 +8,6 @@ oh-my-fish/plugin-docker-machine
 oh-my-fish/plugin-fasd
 oh-my-fish/plugin-foreign-env
 jhillyerd/plugin-git
-oh-my-fish/plugin-git-flow
 oh-my-fish/plugin-grc
 vincentjames501/fish-kill-on-port
 oh-my-fish/plugin-nodenv
