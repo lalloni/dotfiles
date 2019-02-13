@@ -5,7 +5,7 @@ restow --no-folding .
 aptensurepkg lsb-release
 if awk "BEGIN { exit 1 - ($(lsb_release -sr) < 18.04) }"
 then
-    aptaddrepo ppa:fish-shell/release-2
+    aptaddrepo ppa:fish-shell/release-3
 fi
 
 # Packages
