@@ -1,0 +1,21 @@
+#!/bin/bash
+
+set -Eeuo pipefail
+
+LOGSPOUT_CONTAINER="$(docker create -v /var/run/docker.sock:/var/run/docker.sock gliderlabs/logspout)"
+
+trap "docker rm -f $LOGSPOUT_CONTAINER > /dev/null" EXIT
+
+for net in "$@"; do
+    docker network connect $net $LOGSPOUT_CONTAINER
+done
+
+docker start "$LOGSPOUT_CONTAINER" > /dev/null
+
+LOGSPOUT_IP="$(docker inspect --format '{{ .NetworkSettings.IPAddress }}' $LOGSPOUT_CONTAINER)"
+
+while ! curl -sfo /dev/null "http://$LOGSPOUT_IP/health"; do
+    sleep 0.1
+done
+
+curl -s "http://$LOGSPOUT_IP/logs"
