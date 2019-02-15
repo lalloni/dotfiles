@@ -14,8 +14,9 @@ docker start "$LOGSPOUT_CONTAINER" > /dev/null
 
 LOGSPOUT_IP="$(docker inspect --format '{{ .NetworkSettings.IPAddress }}' $LOGSPOUT_CONTAINER)"
 
-while ! curl -sfo /dev/null "http://$LOGSPOUT_IP/health"; do
+while ! curl -sfo /dev/null --noproxy '*' "http://$LOGSPOUT_IP/health"; do
     sleep 0.1
 done
 
-curl -s "http://$LOGSPOUT_IP/logs"
+curl -s --noproxy '*' "http://$LOGSPOUT_IP/logs"
+
