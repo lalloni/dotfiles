@@ -4,7 +4,6 @@ oh-my-fish/plugin-bang-bang
 edc/bass
 oh-my-fish/theme-bobthefish
 oh-my-fish/plugin-direnv
-oh-my-fish/plugin-docker-machine
 oh-my-fish/plugin-fasd
 oh-my-fish/plugin-foreign-env
 jhillyerd/plugin-git
