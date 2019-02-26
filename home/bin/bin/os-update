@@ -1,5 +1,5 @@
-#!/bin/sh
-sudo apt update || exit $?
-sudo apt full-upgrade || exit $?
-sudo apt-get autoremove || exit $?
-sudo apt-get clean || exit $?
+#!/usr/bin/env bash
+set -Eeuo pipefail
+sudo apt update
+sudo apt full-upgrade --autoremove
+sudo apt-get clean
