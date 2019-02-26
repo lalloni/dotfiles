@@ -3,7 +3,7 @@ restow --no-folding .
 
 # Get fish 2.x from PPA if ubuntu version doesn't have it
 aptensurepkg lsb-release
-if awk "BEGIN { exit 1 - ($(lsb_release -sr) < 18.04) }"
+if awk "BEGIN { exit 1 - ($(lsb_release -sr) < 20.04) }"
 then
     aptaddrepo ppa:fish-shell/release-3
 fi
