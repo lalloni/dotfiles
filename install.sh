@@ -58,7 +58,7 @@ aptaddrepo() {
     fi
     if ! apt-cache policy | awk '/http:/{print  $2 $3}' | sort -u | grep -q "${1#ppa:}"
     then
-        apt-add-repository -y "$1"
+        $SUDO apt-add-repository -y "$1"
     fi
     APT_REPOS_NEED_UPDATE="yes"
 }
