@@ -15,3 +15,4 @@ reitzig/sdkman-for-fish
 oh-my-fish/plugin-tab
 oh-my-fish/plugin-thefuck
 jorgebucaran/fish-nvm
+tuvistavie/fish-ssh-agent
