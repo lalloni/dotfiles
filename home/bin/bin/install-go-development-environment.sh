@@ -1,7 +1,7 @@
 #!/bin/bash
 set -xEeuo pipefail
-GO_VERSION=1.11.2
-GORELEASER_VERSION=0.93.2
+GO_VERSION=1.12.1
+GORELEASER_VERSION=0.103.1
 die() {
     echo "$*" >&2
     exit 1
@@ -25,7 +25,7 @@ fi
 which curl >/dev/null || $PRE apt -yq install curl
 if [[ -d /usr/local/go ]] && /usr/local/go/bin/go version | grep -v "$GO_VERSION"
 then
-    rm -rf /usr/local/go
+    $PRE rm -rf /usr/local/go
 fi
 if [[ ! -d /usr/local/go ]]
 then
