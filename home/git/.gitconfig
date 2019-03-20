@@ -13,7 +13,7 @@
     submit = codereview submit
     sync = codereview sync
 [credential]
-	helper = store
+	helper = cache --timeout=1576800000
 [license]
 	author = Pablo Lalloni <plalloni@gmail.com>
 [merge]
