@@ -23,3 +23,5 @@
 	smtpuser = plalloni@gmail.com
 	smtpserverport = 587
 	smtpencryption = tls
+[url "git@gitlab.cloudint.afip.gob.ar:"]
+	insteadOf = https://gitlab.cloudint.afip.gob.ar
