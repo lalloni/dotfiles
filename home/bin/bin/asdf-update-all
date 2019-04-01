@@ -1,0 +1,22 @@
+#!/usr/bin/env fish
+
+asdf update
+
+set -e plugins
+
+for plugin in (asdf list | grep -e "^\w")
+    echo -n "$plugin: "
+    set current (asdf list $plugin | tail -n 1 | string trim)
+    set last (asdf list-all $plugin | tail -n 1 | string trim)
+    if test "$current" = "$last"
+        echo "$current = $last"
+        continue
+    else
+        echo "$current -> $last"
+        set plugins $plugins $plugin $last
+    end
+end
+
+echo $plugins
+parallel -r -p 0 -n 2 -v asdf install ::: $plugins
+parallel -r -p 0 -n 2 -v asdf global ::: $plugins
