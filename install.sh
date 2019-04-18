@@ -167,6 +167,7 @@ then
     aptensurepkg \
         curl \
         htop \
+        ncdu \
         most \
         parallel \
         pv \
