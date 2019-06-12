@@ -1,0 +1,16 @@
+#!/usr/bin/env fish
+function check -a N
+    if test $N -ne 0
+        echo "aborting"
+        exit $N
+    end
+end
+set H $argv[1]
+set F (tempfile)
+set N (string replace -a ":" "-" $H)
+echo "q" | openssl s_client -connect $H | openssl x509 -text -in - > $F
+check $status
+certutil -d sql:$HOME/.pki/nssdb -A -t "P,," -n "$N" -i "$F"
+check $status
+echo "added $N:"
+certutil -d sql:$HOME/.pki/nssdb -L
