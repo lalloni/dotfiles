@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
 sudo apt update
-sudo apt full-upgrade --autoremove
+sudo apt full-upgrade
+sudo apt autoremove --purge
 sudo apt-get clean
