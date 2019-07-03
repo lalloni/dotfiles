@@ -8,9 +8,12 @@ end
 set H $argv[1]
 set F (tempfile)
 set N (string replace -a ":" "-" $H)
+echo "getting certificate..."
 echo "q" | openssl s_client -connect $H | openssl x509 -text -in - > $F
 check $status
+echo "adding certificate to nssdb..."
 certutil -d sql:$HOME/.pki/nssdb -A -t "P,," -n "$N" -i "$F"
 check $status
 echo "added $N:"
+echo "listing nssdb certificates..."
 certutil -d sql:$HOME/.pki/nssdb -L
