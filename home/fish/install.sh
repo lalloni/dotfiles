@@ -9,7 +9,7 @@ then
 fi
 
 # Packages
-aptensurepkg fish grc
+aptensurepkg fish
 
 # Install fish plugins
 info "Installing fish plugins..."
@@ -21,10 +21,6 @@ info "Configuring fish..."
 if which vim >/dev/null
 then
     fish -c 'set -Ux EDITOR (which vim)'
-fi
-if which most >/dev/null
-then
-    fish -c 'set -Ux PAGER (which most)'
 fi
 if [[ -d "$HOME/go" ]]
 then
