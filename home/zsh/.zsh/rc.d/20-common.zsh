@@ -9,6 +9,6 @@ case "$TERM" in
 esac
 export TERM
 
-export PAGER=most
+export PAGER=less
 export EDITOR=vim
 
