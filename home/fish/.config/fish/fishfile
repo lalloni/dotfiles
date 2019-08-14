@@ -11,7 +11,6 @@ oh-my-fish/plugin-foreign-env
 oh-my-fish/plugin-pbcopy
 oh-my-fish/plugin-peco
 oh-my-fish/plugin-tab
-oh-my-fish/plugin-thefuck
 oh-my-fish/theme-bobthefish
 reitzig/sdkman-for-fish
 tuvistavie/fish-ssh-agent
