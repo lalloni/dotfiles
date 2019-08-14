@@ -168,7 +168,6 @@ then
         curl \
         htop \
         ncdu \
-        most \
         parallel \
         pv \
         ranger \
