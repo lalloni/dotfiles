@@ -1,1 +1,0 @@
-replacehomelink ".nvm"
