@@ -1,6 +1,7 @@
 [user]
 	name = Pablo Lalloni
 	email = plalloni@gmail.com
+	signingkey = C50B8FF2BA30B5C6
 [push]
 	default = simple
 [http]
@@ -25,3 +26,7 @@
 	smtpencryption = tls
 [url "git@gitlab.cloudint.afip.gob.ar:"]
 	insteadOf = https://gitlab.cloudint.afip.gob.ar
+[gpg]
+	program = gpg2
+[commit]
+	gpgsign = false
