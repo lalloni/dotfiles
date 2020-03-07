@@ -5,7 +5,7 @@ ZSH=$HOME/.oh-my-zsh
 ZSH_CUSTOM=$HOME/.oh-my-zsh-custom
 
 # Set name of the theme to load
-ZSH_THEME="pilantropy"
+ZSH_THEME="powerlevel10k/powerlevel10k"
 
 # Set to this to use case-sensitive completion
 # CASE_SENSITIVE="true"
@@ -23,12 +23,16 @@ DISABLE_AUTO_UPDATE="true"
 # DISABLE_AUTO_TITLE="true"
 
 # Uncomment following line if you want red dots to be displayed while waiting for completion
-# COMPLETION_WAITING_DOTS="true"
+COMPLETION_WAITING_DOTS="true"
 
 # Plugins to load
 plugins=(
+    asdf
+    aws
     cargo
     colored-man-pages
+    command-not-found
+    common-aliases
     copybuffer
     dircycle
     dirhistory
@@ -36,25 +40,47 @@ plugins=(
     docker-compose
     fasd
     git
+    git-extras
     github
     golang
+    gpg-agent
+    gradle
+    helm
     httpie
+    jira
+    kubectl
+    last-working-dir
     mvn
     npm
     nvm
+    pass
+    pyenv
+    python
+    redis-cli
     rust
     rbenv
     sbt
+    sdk
     scala
+    screen
     ssh-agent
+    sudo
     systemd
+    taskwarrior
     tmux
-    oc
     urltools
     vagrant
+    vscode
+    web-search
+    z
+    fz # must be loaded *after* z
     zsh-syntax-highlighting
     history-substring-search # must be loaded *after* zsh-syntax-highlighting
 )
+
+# setup ssh-agent plugin
+zstyle :omz:plugins:ssh-agent agent-forwarding on
+zstyle :omz:plugins:ssh-agent identities id_rsa
 
 source $ZSH/oh-my-zsh.sh
 
