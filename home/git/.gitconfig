@@ -30,3 +30,5 @@
 	program = gpg2
 [commit]
 	gpgsign = false
+[rerere]
+	enabled = true
