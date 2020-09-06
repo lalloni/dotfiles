@@ -1,22 +1,27 @@
-#!/usr/bin/env fish
+#!/usr/bin/env zsh
 
 asdf update
 
-set -e plugins
-
-for plugin in (asdf list | grep -e "^\w")
+for plugin in $(asdf list | grep -e "^\w"); do
     echo -n "$plugin: "
-    set current (asdf list $plugin | tail -n 1 | string trim)
-    set last (asdf list-all $plugin | tail -n 1 | string trim)
-    if test "$current" = "$last"
-        echo "$current = $last"
+    current=${=$(asdf list $plugin | tail -n 1)}
+    echo -n "current $current "
+    versions=(${=$(asdf list-all $plugin)})
+    last=$versions[-1]
+    echo -n "last $last "
+    if [[ "$current" == "$last" ]]; then
+        echo "→ keep"
         continue
     else
-        echo "$current -> $last"
-        set plugins $plugins $plugin $last
-    end
-end
+        echo "→ update"
+        selected=$(printf '%s\n' "${versions[@]}" | tac | fzf --layout=reverse --no-sort --header "Select $plugin version to use (or press ESC to skip):")
+        if [[ -n "$selected" ]]; then
+            echo "Installing $plugin $selected..."
+            asdf install $plugin $selected
+            echo "Setting $plugin $selected as global dfault version..."
+            asdf global $plugin $selected
+        fi
+    fi
+done
 
-echo $plugins
-parallel -r -p 0 -n 2 -v asdf install ::: $plugins
-parallel -r -p 0 -n 2 -v asdf global ::: $plugins
+echo done
