@@ -27,18 +27,25 @@ COMPLETION_WAITING_DOTS="true"
 
 # Plugins to load
 plugins=(
+    alias-finder
+    ant
     asdf
     aws
+    bazel
+    bgnotify
     cargo
+    catimg
     colored-man-pages
     command-not-found
     common-aliases
     copybuffer
+    cp
     dircycle
     dirhistory
     docker
     docker-compose
     fasd
+    gcloud
     git
     git-extras
     github
@@ -46,36 +53,51 @@ plugins=(
     gpg-agent
     gradle
     helm
+    history-substring-search
     httpie
     jira
     kubectl
     last-working-dir
+    microk8s
+    minikube
+    mosh
     mvn
+    nmap
+    node
     npm
     nvm
+    otp
     pass
     pyenv
     python
     redis-cli
+    ripgrep
+    rsync
     rust
+    rustup
     rbenv
+    #safe-paste
     sbt
     sdk
     scala
     screen
+    sprunge
     ssh-agent
     sudo
+    svn
     systemd
-    taskwarrior
+    #taskwarrior
+    terraform
+    thefuck
     tmux
     urltools
     vagrant
-    vscode
     web-search
     z
     fz # must be loaded *after* z
     zsh-syntax-highlighting
     history-substring-search # must be loaded *after* zsh-syntax-highlighting
+    zsh_reload
 )
 
 # setup ssh-agent plugin
@@ -86,3 +108,4 @@ source $ZSH/oh-my-zsh.sh
 
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets root)
 
+ZSH_TMUX_AUTOCONNECT=false
