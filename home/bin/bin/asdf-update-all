@@ -2,7 +2,7 @@
 
 asdf update
 
-for plugin in $(asdf list | grep -e "^\w"); do
+for plugin in $(asdf plugin-list); do
     echo -n "$plugin: "
     current=${=$(asdf list $plugin | tail -n 1)}
     echo -n "current $current "
@@ -10,16 +10,29 @@ for plugin in $(asdf list | grep -e "^\w"); do
     last=$versions[-1]
     echo -n "last $last "
     if [[ "$current" == "$last" ]]; then
-        echo "→ keep"
+        echo "→ no update"
         continue
     else
+        selected=$(printf '%s\n' "${versions[@]}" | tac | fzf --layout=reverse --no-sort --header "Select $plugin version (current is $current) to use (or press ESC to skip):")
+        if [[ -z "$selected" || "$current" == "$selected" ]]; then
+            echo "→ keep"
+            continue
+        fi
         echo "→ update"
-        selected=$(printf '%s\n' "${versions[@]}" | tac | fzf --layout=reverse --no-sort --header "Select $plugin version to use (or press ESC to skip):")
-        if [[ -n "$selected" ]]; then
-            echo "Installing $plugin $selected..."
-            asdf install $plugin $selected
-            echo "Setting $plugin $selected as global dfault version..."
+        preinstalled=(${=$(asdf list $plugin)})
+        echo "Installing $plugin $selected..."
+        asdf install $plugin $selected
+        if [[ $? -eq 0 ]]; then
+            echo "Setting $plugin $selected as global default version..."
             asdf global $plugin $selected
+            for version in $preinstalled; do
+                if [[ "$selected" != "$version" ]]; then
+                    echo "Uninstalling old $plugin $version..."
+                    asdf uninstall $plugin $version
+                fi
+            done
+        else
+            echo "Installation failed: not changing default version"
         fi
     fi
 done
