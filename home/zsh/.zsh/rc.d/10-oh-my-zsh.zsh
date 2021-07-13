@@ -41,6 +41,7 @@ plugins=(
     copybuffer
     cp
     dircycle
+    direnv
     dirhistory
     docker
     docker-compose
@@ -48,6 +49,7 @@ plugins=(
     gcloud
     git
     git-extras
+    gitfast
     github
     golang
     gpg-agent
